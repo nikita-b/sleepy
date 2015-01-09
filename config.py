@@ -12,4 +12,14 @@ OPENID_PROVIDERS = [
     {'name': 'Yahoo', 'url': 'https://me.yahoo.com'},
     {'name': 'AOL', 'url': 'http://openid.aol.com/<username>'},
     {'name': 'Flickr', 'url': 'http://www.flickr.com/<username>'},
-    {'name': 'MyOpenID', 'url': 'https://www.myopenid.com'}]
+    {'name': 'MyOpenID', 'url': 'https://www.myopenid.com'},
+    {'name': 'Yandex', 'url': 'http://openid.yandex.ru/'}]
+
+MAIL_SERVER = 'localhost'
+MAIL_PORT = 25
+MAIL_USERNAME = None
+MAIL_PASSWORD = None
+
+ADMINS = ['nikita@belecky.ru']
+
+POSTS_PER_PAGE = 3

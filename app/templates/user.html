@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-2"><img src="{{ user.avatar(128) }}"></div>
+        <div class="col-md-10">
+                <h1 class="user-info">{{ user.nickname }}</h1>
+                {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
+                {% if user.last_seen %}<p>{{ user.last_seen }}</p>{% endif %}
+                <p>{{ user.followers.count() }} подписчиков |
+                {% if user.id == g.user.id%}
+                    <a href="{{ url_for('edit') }}">Редактировать профиль</a>
+                {% elif not g.user.is_following(user) %}
+                    <a href="{{ url_for('follow', nickname=user.nickname) }}">Подписаться</a>
+                {% else %}
+                    <a href="{{ url_for('unfollow', nickname=user.nickname) }}">Отписаться</a>
+                {% endif%}
+
+        </div>
+    </div>
+    {% for post in posts.items %}
+        {% include "post.html" %}
+    {% endfor %}
+    {% if posts.has_prev %}<a href="{{ url_for('user', nickname=user.nickname, page=posts.prev_num) }}"><< Newer posts</a>{% else %}<< Newer posts{% endif %} | 
+    {% if posts.has_next %}<a href="{{ url_for('user', nickname=user.nickname, page=posts.next_num) }}">Older posts >></a>{% else %}Older posts >>{% endif %}
+{% endblock %}

@@ -1,7 +1,62 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>Hello, {{ user.nickname }}!</h1>
-    {% for post in posts %}
-    <div><p>{{ post.author.nickname }} says: <b>{{ post.body }}</b></p></div>
-    {% endfor %}
+    <div class="alert alert-info" role="alert"><h1>Привет, {{ g.user.nickname }}! Тебе сегодня, что-нибудь <a href="#">снилось</a>?</h1></div>
+    <!--<form action="" method="POST" name="post">
+        {{ form.hidden_tag() }}
+        <table>
+            <tr>
+                <td>Say something:</td>
+                <td>{{ form.post(size=20, maxlength=140) }}</td>
+                <td>
+                {% for error in form.post.errors %}
+                <span style="color:red;">[{{ error }}]</span><br>
+                {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Post!"></td>
+                <td></td>
+            </tr>
+        </table>
+    </form>-->
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Сны друзей</h3>
+                </div>
+                <div class="panel-body">
+                    {% for post in posts.items %}
+                        {% include 'post.html' %}
+                    {% endfor %}
+                    {% if posts.has_prev %}<a href="{{ url_for('index', page=posts.prev_num) }}"><< Более новые</a>
+                    {% else %} << Более новые{% endif%} |
+                    {% if posts.has_next %}<a href="{{ url_for('index', page=posts.next_num) }}">Более старые >></a>
+                    {% else %} Более старые >> {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Популярные сны</h3>
+              </div>
+              <div class="panel-body">
+                Panel content
+              </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Обсуждаемые сны</h3>
+              </div>
+              <div class="panel-body">
+                Panel content                
+              </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
