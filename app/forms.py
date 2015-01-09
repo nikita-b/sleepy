@@ -1,5 +1,5 @@
 from flask.ext.wtf import Form
-from wtforms import StringField, BooleanField, TextAreaField
+from wtforms import StringField, BooleanField, TextAreaField, DateField
 from wtforms.validators import DataRequired, Length
 
 class LoginForm(Form):
@@ -28,7 +28,8 @@ class EditForm(Form):
         return True
 
 class PostForm(Form):
-    post = StringField('post', validators=[DataRequired()])
+    description = TextAreaField('description', validators=[DataRequired()])
+    datesleep = DateField('datesleep', format='%Y-%m-%d', validators=[DataRequired()])
 
 #class AddDreamForm(Form):
 #    description = TextAreaField

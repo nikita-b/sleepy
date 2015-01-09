@@ -1,25 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
     <div class="alert alert-info" role="alert"><h1>Привет, {{ g.user.nickname }}! Тебе сегодня, что-нибудь <a href="#">снилось</a>?</h1></div>
-    <!--<form action="" method="POST" name="post">
-        {{ form.hidden_tag() }}
-        <table>
-            <tr>
-                <td>Say something:</td>
-                <td>{{ form.post(size=20, maxlength=140) }}</td>
-                <td>
-                {% for error in form.post.errors %}
-                <span style="color:red;">[{{ error }}]</span><br>
-                {% endfor %}
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><input type="submit" value="Post!"></td>
-                <td></td>
-            </tr>
-        </table>
-    </form>-->
+
     <div class="row">
         <div class="col-md-4">
             <div class="panel panel-default">

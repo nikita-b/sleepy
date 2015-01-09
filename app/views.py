@@ -42,6 +42,7 @@ def login():
 def load_user(id):
     return User.query.get(int(id))
 
+
 @app.before_request
 def before_request():
     g.user = current_user
@@ -49,6 +50,7 @@ def before_request():
         g.user.last_seen = datetime.utcnow()
         db.session.add(g.user)
         db.session.commit()
+
 
 @oid.after_login
 def after_login(resp):
@@ -76,6 +78,7 @@ def after_login(resp):
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
 
 @app.route('/user/<nickname>/<int:page>')
 @app.route('/user/<nickname>')
@@ -105,6 +108,17 @@ def edit():
         form.about_me.data = g.user.about_me
     user = User.query.filter_by(nickname=g.user.nickname).first()
     return render_template('editProfile.html', form=form, user=user)
+
+@app.route('/dream/add', methods=['GET', 'POST'])
+def add_dream():
+    form = PostForm()
+    if form.validate_on_submit():
+        post = Post(description=form.description.data, timestamp=datetime.utcnow(), author=g.user, datesleep=form.datesleep.data)
+        db.session.add(post)
+        db.session.commit()
+        flash('Ваш сон опубликован, спасибо!')
+        return redirect(url_for('index'))
+    return render_template('add.html', form=form)
 
 
 
@@ -160,3 +174,10 @@ def unfollow(nickname):
 @app.route('/register')
 def register():
     return render_template('register.html')
+
+
+
+
+@app.route('/dream/<int:num>')
+def dream(num):
+    return render_template('dream.html', num=num)

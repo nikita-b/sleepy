@@ -78,7 +78,5 @@ class Post(db.Model):
     description = db.Column(db.Text)
     datesleep = db.Column(db.DateTime)
 
-
     def __repr__(self):
         return '<Dream %r>' % (self.body)
-

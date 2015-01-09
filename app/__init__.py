@@ -38,4 +38,8 @@ if not app.debug:
     app.logger.addHandler(file_handler)
     app.logger.info('microblog statup')
 
+from .momentjs import momentjs
+
+app.jinja_env.globals['momentjs'] = momentjs
+
 from app import views, models

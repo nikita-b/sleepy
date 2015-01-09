@@ -6,7 +6,7 @@
         <div class="col-md-10">
                 <h1 class="user-info">{{ user.nickname }}</h1>
                 {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
-                {% if user.last_seen %}<p>{{ user.last_seen }}</p>{% endif %}
+                {% if user.last_seen %}<p>Заходил: {{ momentjs(user.last_seen).calendar() }}</p>{% endif %}
                 <p>{{ user.followers.count() }} подписчиков |
                 {% if user.id == g.user.id%}
                     <a href="{{ url_for('edit') }}">Редактировать профиль</a>
