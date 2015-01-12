@@ -14,11 +14,11 @@ class User(db.Model):
     posts = db.relationship('Post', backref='author', lazy='dynamic')
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime)
-    followed = db.relationship('User', 
-                               secondary=followers, 
-                               primaryjoin=(followers.c.follower_id == id), 
-                               secondaryjoin=(followers.c.followed_id == id), 
-                               backref=db.backref('followers', lazy='dynamic'), 
+    followed = db.relationship('User',
+                               secondary=followers,
+                               primaryjoin=(followers.c.follower_id == id),
+                               secondaryjoin=(followers.c.followed_id == id),
+                               backref=db.backref('followers', lazy='dynamic'),
                                lazy='dynamic')
 
     def follow(self, user):
@@ -35,8 +35,7 @@ class User(db.Model):
         return self.followed.filter(followers.c.followed_id == user.id).count() > 0
 
     def followed_posts(self):
-        return Post.query.join(followers, 
-            (followers.c.followed_id == Post.user_id)).filter(followers.c.follower_id == self.id).order_by(Post.timestamp.desc())
+        return Post.query.join(followers, (followers.c.followed_id == Post.user_id)).filter(followers.c.follower_id == self.id).order_by(Post.timestamp.desc())
 
     @staticmethod
     def make_unique_nickname(nickname):
@@ -49,7 +48,6 @@ class User(db.Model):
                 break
             version += 1
         return new_nickname
-
 
     def is_authenticated(self):
         return True
@@ -64,7 +62,7 @@ class User(db.Model):
         return str(self.id)
 
     def avatar(self, size):
-        return 'http://www.gravatar.com/avatar/%s?d=mm&s=%d' % (md5(self.email.encode('utf-8')).hexdigest(), size)
+        return 'http://www.gravatar.com/avatar/%s?d=mm&s=%d' %(md5(self.email.encode('utf-8')).hexdigest(), size)
 
     def __repr__(self):
         return '<User %r>' % (self.nickname)
@@ -72,11 +70,17 @@ class User(db.Model):
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    body = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     description = db.Column(db.Text)
     datesleep = db.Column(db.DateTime)
+    rating = db.Column(db.Integer)
+
+    def fdescription(self, limit):
+        if len(self.description) > limit:
+            return self.description[:limit] + '...'
+        return self.description
+
 
     def __repr__(self):
-        return '<Dream %r>' % (self.body)
+        return '<Dream %r>' % (self.id)

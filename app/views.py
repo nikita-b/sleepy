@@ -4,25 +4,26 @@ from app import app, db, lm, oid
 from .forms import LoginForm, EditForm, PostForm
 from .models import User, Post
 from datetime import datetime
+#from .cfilter import nl2br
+###REMOVE
+import re
+from jinja2 import evalcontextfilter, Markup, escape
+_paragraph_re = re.compile(r'(?:\r\n|\r|\n){2,}')
 
+###REMOVE
 from config import POSTS_PER_PAGE
 
+from sqlalchemy import desc
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 @app.route('/index/<int:page>', methods=['GET', 'POST'])
 @login_required
 def index(page=1):
-    form = PostForm()
-    if form.validate_on_submit():
-        post = Post(body=form.post.data, timestamp=datetime.utcnow(), author=g.user)
-        db.session.add(post)
-        db.session.commit()
-        flash('You post is now live!')
-        return redirect(url_for('index'))
     posts = g.user.followed_posts().paginate(page, POSTS_PER_PAGE, False)
-    return render_template('index.html', title = 'Home', form=form,
-    posts=posts)
+    posts2 = Post.query.order_by(Post.id.desc()).limit(10).all()
+    return render_template('index.html', title = 'Home',
+    posts=posts, posts2=posts2)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -86,7 +87,7 @@ def logout():
 def user(nickname, page=1):
     user = User.query.filter_by(nickname=nickname).first()
     if user == None:
-        flash('User %s nor found.' % nickname)
+        flash('Пользователь %s не существует.' % nickname)
         return redirect(url_for('index'))
     posts = user.posts.paginate(page, POSTS_PER_PAGE, False)
     return render_template('user.html', user=user, posts=posts)
@@ -111,9 +112,10 @@ def edit():
 
 @app.route('/dream/add', methods=['GET', 'POST'])
 def add_dream():
-    form = PostForm()
+    form = PostForm(request.form)
+
     if form.validate_on_submit():
-        post = Post(description=form.description.data, timestamp=datetime.utcnow(), author=g.user, datesleep=form.datesleep.data)
+        post = Post(description=form.description.data, timestamp=datetime.utcnow(), author=g.user, datesleep=form.datesleep.data, rating=0)
         db.session.add(post)
         db.session.commit()
         flash('Ваш сон опубликован, спасибо!')
@@ -180,4 +182,20 @@ def register():
 
 @app.route('/dream/<int:num>')
 def dream(num):
-    return render_template('dream.html', num=num)
+    dream = Post.query.filter_by(id=int(num)).first()
+    if dream == None:
+        flash('Сна с номером #%s не существует :(' % num)
+        return redirect(url_for('index'))
+    return render_template('dream.html', dream=dream)
+
+
+
+
+@app.template_filter()
+@evalcontextfilter
+def nl2br(eval_ctx, value):
+    result = u'\n\n'.join(u'<p>%s</p>' % p.replace('\n', '<br>\n') \
+        for p in _paragraph_re.split(escape(value)))
+    if eval_ctx.autoescape:
+        result = Markup(result)
+    return result

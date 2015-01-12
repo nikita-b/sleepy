@@ -1,8 +1,50 @@
-.user-info {
-    margin-top: 5px;
-}
-
 .add-form {
     max-width: 600px;
     margin: 0 auto;
+}
+
+.navbar-default .navbar-nav>li>a.add-link {
+    color: red;
+}
+
+.container {
+    width: 740px;
+}
+
+.postwrapper {
+    background-color: #f3f3f3;
+    border: 1px dotted #bbbbbb;
+    font-family: 'Monaco', 'Liberation Mono', 'Droid Sans Mono', 'Ubuntu Mono', 'Lucida Console', 'Helvetica Neue', monospace;
+    margin: 10px 10px;
+}
+
+.postrow {
+    padding: 5px 15px;
+}
+
+
+.post-tools {
+    border-top: 2px dotted #bbbbbb;
+    padding: 0px 20px;
+    color: rgb(178, 178, 178);
+}
+
+.post-tools a{
+    color: #6565FB;
+}
+
+.more-link {
+    float: right;
+}
+
+
+/*
+USER PROFILE
+*/
+.user-top {
+    padding: 0px 10px;
+}
+
+.user-info {
+    margin-top: 0px;
 }

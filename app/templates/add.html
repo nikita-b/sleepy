@@ -3,15 +3,13 @@
 {% block content %}
 <div class="add-form">
     <h2>Расскажите немного о вашем сне</h2>
-    <form clas action="" method="POST" name="add-dream">
+    <form clas action="" method="POST">
         {{ form.hidden_tag() }}
-        <!--<label class="description" for="description">Общее описание сна</label>-->
         {{ form.description(class='form-control input-lg', rows=12) }}
         <span class="help-block">Постарайтесь описать основной сюжет сна как можно подробней. Если хотите почитать
         рекомендации о том, как лучше запоминать сны, то смотрите <a href="#">тут</a>.</span>
         <label class="datasleep" for="datasleep">Когда он приснился?</label>
         {{ form.datesleep(class='form-control datepicker') }}
-        <!--<span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
 
         <div class="row">
             <div class="col-md-6">
