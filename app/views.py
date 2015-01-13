@@ -4,13 +4,14 @@ from app import app, db, lm, oid
 from .forms import LoginForm, EditForm, PostForm
 from .models import User, Post
 from datetime import datetime
-#from .cfilter import nl2br
+from .cfilter import nl2br
+
 ###REMOVE
 import re
 from jinja2 import evalcontextfilter, Markup, escape
 _paragraph_re = re.compile(r'(?:\r\n|\r|\n){2,}')
-
 ###REMOVE
+
 from config import POSTS_PER_PAGE
 
 from sqlalchemy import desc
@@ -22,7 +23,7 @@ from sqlalchemy import desc
 def index(page=1):
     posts = g.user.followed_posts().paginate(page, POSTS_PER_PAGE, False)
     posts2 = Post.query.order_by(Post.id.desc()).limit(10).all()
-    return render_template('index.html', title = 'Home',
+    return render_template('index.html', title = 'Новые сны',
     posts=posts, posts2=posts2)
 
 
@@ -178,8 +179,6 @@ def register():
     return render_template('register.html')
 
 
-
-
 @app.route('/dream/<int:num>')
 def dream(num):
     dream = Post.query.filter_by(id=int(num)).first()
@@ -189,13 +188,3 @@ def dream(num):
     return render_template('dream.html', dream=dream)
 
 
-
-
-@app.template_filter()
-@evalcontextfilter
-def nl2br(eval_ctx, value):
-    result = u'\n\n'.join(u'<p>%s</p>' % p.replace('\n', '<br>\n') \
-        for p in _paragraph_re.split(escape(value)))
-    if eval_ctx.autoescape:
-        result = Markup(result)
-    return result

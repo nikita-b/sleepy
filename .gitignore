@@ -5,3 +5,4 @@ search.db
 flask
 *.mo
 tmp
+instance

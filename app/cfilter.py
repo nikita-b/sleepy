@@ -4,7 +4,7 @@ from jinja2 import evalcontextfilter, Markup, escape
 
 _paragraph_re = re.compile(r'(?:\r\n|\r|\n){2,}')
 
-app = Flask(__name__)
+from app import app
 
 @app.template_filter()
 @evalcontextfilter
