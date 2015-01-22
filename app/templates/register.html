@@ -1,12 +1,20 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-    <form action="" method="POST" name="register">
-        <div class="input-group input-group-lg">
-            <span class="input-group-addon" id="basic-addon1">E-mail</span>
-            <input type="text" class="form-control" placeholder="mail@example.com" aria-describedby="basic-addon1">
+<div class="col-md-6 col-md-offset-3">
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="input-group register-field">
+            <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw fa-lg"></i></span>
+            {{ form.email(class="form-control input-lg", placeholder="E-mail") }}
+           
         </div>
-
+        <div class="input-group register-field">
+            <span class="input-group-addon"><i class="fa fa-key fa-fw fa-lg"></i></span>
+            {{ form.password(class="form-control input-lg", placeholder="Пароль") }}
+        </div>
+        <input class="btn btn-primary btn-lg btn-block" type="submit" value="Зарегистрироваться">
     </form>
+</div>
+
 {% endblock %}

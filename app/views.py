@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, session, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, oid
-from .forms import LoginForm, EditForm, PostForm
+from .forms import LoginForm, EditForm, PostForm, RegistrationForm
 from .models import User, Post, Article
 from datetime import datetime
 from .cfilter import nl2br
@@ -175,9 +175,16 @@ def unfollow(nickname):
     return redirect(url_for('user', nickname=nickname))
 
 
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
 def register():
-    return render_template('register.html')
+    form = RegistrationForm(request.form)
+    if request.method == 'POST' and form.validate():
+        user = User(email=form.email.data, password=form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('Спасибо за регистрацию!')
+        return redirect(url_for('login'))
+    return render_template('register.html', form=form, title='Создание своего дневника :)')
 
 
 @app.route('/dream/<int:num>')
