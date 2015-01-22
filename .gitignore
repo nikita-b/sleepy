@@ -1,8 +1,9 @@
 *.pyc
 *.pyo
-app.db
-search.db
+*.db
 flask
 *.mo
 tmp
 instance
+alembic.ini
+*.sublime-*

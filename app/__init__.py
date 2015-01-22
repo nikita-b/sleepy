@@ -1,26 +1,40 @@
 import os
+
+from flask import Flask
+from config import basedir
+
 from flask.ext.login import LoginManager
 from flask.ext.openid import OpenID
-from config import basedir
-from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
-from config import basedir, ADMINS, MAIL_SERVER, MAIL_PORT, MAIL_USERNAME, MAIL_PASSWORD
+from flask.ext.script import Manager
+from flask.ext.migrate import Migrate, MigrateCommand
 from flask_debugtoolbar import DebugToolbarExtension
 
 
 
-
 app = Flask(__name__, instance_relative_config=True)
+
 app.config.from_object('config')
 app.config.from_pyfile('config.py')
+
 db = SQLAlchemy(app)
+
+#migrate
+migrate = Migrate(app, db)
+manager = Manager(app)
+manager.add_command('db', MigrateCommand)
+
+#login
 lm = LoginManager()
 lm.init_app(app)
 lm.login_view = 'login'
+
+#openid
 oid = OpenID(app, os.path.join(basedir, 'tmp'))
+
 #DebugToolbar
 app.debug = True
-
+DEBUG_TB_INTERCEPT_REDIRECTS = False
 toolbar = DebugToolbarExtension(app)
 
 #LOG DEBUG

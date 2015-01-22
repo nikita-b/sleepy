@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, session, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, oid
 from .forms import LoginForm, EditForm, PostForm
-from .models import User, Post
+from .models import User, Post, Article
 from datetime import datetime
 from .cfilter import nl2br
 
@@ -16,15 +16,12 @@ from config import POSTS_PER_PAGE
 
 from sqlalchemy import desc
 
-@app.route('/', methods=['GET', 'POST'])
-@app.route('/index', methods=['GET', 'POST'])
-@app.route('/index/<int:page>', methods=['GET', 'POST'])
-@login_required
+@app.route('/')
 def index(page=1):
-    posts = g.user.followed_posts().paginate(page, POSTS_PER_PAGE, False)
-    posts2 = Post.query.order_by(Post.id.desc()).limit(10).all()
+    #posts = g.user.followed_posts().paginate(page, POSTS_PER_PAGE, False)
+    posts = Post.query.order_by(Post.id.desc()).limit(10).all()
     return render_template('index.html', title = 'Новые сны',
-    posts=posts, posts2=posts2)
+    posts=posts)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -116,7 +113,11 @@ def add_dream():
     form = PostForm(request.form)
 
     if form.validate_on_submit():
-        post = Post(description=form.description.data, timestamp=datetime.utcnow(), author=g.user, datesleep=form.datesleep.data, rating=0)
+        if g.user.is_authenticated():
+            author = g.user
+        else:
+            author = User.query.filter_by(id=0).first()
+        post = Post(description=form.description.data, timestamp=datetime.utcnow(), author=author, datesleep=form.datesleep.data, rating=0)
         db.session.add(post)
         db.session.commit()
         flash('Ваш сон опубликован, спасибо!')
@@ -187,4 +188,10 @@ def dream(num):
         return redirect(url_for('index'))
     return render_template('dream.html', dream=dream)
 
-
+@app.route('/article/<int:num>')
+def article(num):
+    article = Article.query.filter_by(id=int(num)).first()
+    if article == None:
+        flash('Такой статьи не существует')
+        return redirect(url_for('index'))
+    return render_template('article.html', article)
