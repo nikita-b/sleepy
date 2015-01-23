@@ -1,5 +1,6 @@
 from app import db
 from hashlib import md5
+from app import bcrypt
 
 followers = db.Table('followers',
     db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
@@ -25,6 +26,11 @@ class User(db.Model):
                                secondaryjoin=(followers.c.followed_id == id),
                                backref=db.backref('followers', lazy='dynamic'),
                                lazy='dynamic')
+
+    def __init__(self, nickname, password, email):
+        self.nickname = nickname
+        self.password = bcrypt.generate_password_hash(password)
+        self.email = email
 
     def follow(self, user):
         if not self.is_following(user):

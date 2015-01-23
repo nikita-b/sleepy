@@ -1,10 +1,15 @@
+from datetime import datetime
+
 from flask import render_template, flash, redirect, session, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
-from app import app, db, lm, oid
+from sqlalchemy import desc
+
+from app import app, db, lm, bcrypt
+from .cfilter import nl2br
 from .forms import LoginForm, EditForm, PostForm, RegistrationForm
 from .models import User, Post, Article
-from datetime import datetime
-from .cfilter import nl2br
+from config import POSTS_PER_PAGE
+
 
 ###REMOVE
 import re
@@ -12,12 +17,10 @@ from jinja2 import evalcontextfilter, Markup, escape
 _paragraph_re = re.compile(r'(?:\r\n|\r|\n){2,}')
 ###REMOVE
 
-from config import POSTS_PER_PAGE
 
-from sqlalchemy import desc
 
 @app.route('/')
-def index(page=1):
+def index():
     #posts = g.user.followed_posts().paginate(page, POSTS_PER_PAGE, False)
     posts = Post.query.order_by(Post.id.desc()).limit(10).all()
     return render_template('index.html', title = 'Новые сны',
@@ -25,16 +28,28 @@ def index(page=1):
 
 
 @app.route('/login', methods=['GET', 'POST'])
-@oid.loginhandler
 def login():
-    if g.user is not None and g.user.is_authenticated():
-        return redirect(url_for('index'))
     form = LoginForm()
     if form.validate_on_submit():
-        session['remember_me'] = form.remember_me.data
-        return oid.try_login(form.openid.data, ask_for=['nickname', 'email'])
-    return render_template('login.html', title='Sign In', form=form,
-        providers=app.config['OPENID_PROVIDERS'])
+        user = User.query.filter_by(email=form.email.data).first()
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+                login_user(user)
+                return redirect(request.args.get("next") or url_for("index"))
+        flash('К сожалению такого пользователя нет в нашей базе данных :(')
+    return render_template('login.html', title='Зайти в свой дневник', form=form)
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm(request.form)
+    if request.method == 'POST' and form.validate():
+        user = User(email=form.email.data, password=form.password.data, nickname=form.nickname.data)
+        db.session.add(user)
+        db.session.commit()
+        login_user(user)
+        flash('Спасибо за регистрацию!')
+        return redirect(request.args.get("next") or url_for("index"))
+    return render_template('register.html', form=form, title='Создание своего дневника :)')
 
 
 @lm.user_loader
@@ -49,28 +64,6 @@ def before_request():
         g.user.last_seen = datetime.utcnow()
         db.session.add(g.user)
         db.session.commit()
-
-
-@oid.after_login
-def after_login(resp):
-    if resp.email is None or resp.email == "":
-        flash('Invalid login. Please try again')
-        return redirect(url_for('login'))
-    user = User.query.filter_by(email=resp.email).first()
-    if user is None:
-        nickname = resp.nickname
-        if nickname is None or nickname == "":
-            nickname = resp.email.split('@')[0]
-        nickname = User.make_unique_nickname(nickname)
-        user = User(nickname=nickname, email = resp.email)
-        db.session.add(user)
-        db.session.commit()
-    remember_me = False
-    if 'remember_me' in session:
-        remember_me = session['remember_me']
-        session.pop('remember_me', None)
-    login_user(user, remember = remember_me)
-    return redirect(request.args.get('next') or url_for('index'))
 
 
 @app.route('/logout')
@@ -173,18 +166,6 @@ def unfollow(nickname):
     db.session.commit()
     flash('You have stopped following ' + nickname + '.')
     return redirect(url_for('user', nickname=nickname))
-
-
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    form = RegistrationForm(request.form)
-    if request.method == 'POST' and form.validate():
-        user = User(email=form.email.data, password=form.password.data)
-        db.session.add(user)
-        db.session.commit()
-        flash('Спасибо за регистрацию!')
-        return redirect(url_for('login'))
-    return render_template('register.html', form=form, title='Создание своего дневника :)')
 
 
 @app.route('/dream/<int:num>')

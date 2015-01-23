@@ -7,6 +7,7 @@ from flask.ext.login import LoginManager
 from flask.ext.openid import OpenID
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.script import Manager
+from flask.ext.bcrypt import Bcrypt
 from flask.ext.migrate import Migrate, MigrateCommand
 from flask_debugtoolbar import DebugToolbarExtension
 
@@ -18,6 +19,9 @@ app.config.from_object('config')
 app.config.from_pyfile('config.py')
 
 db = SQLAlchemy(app)
+
+#bcrypt
+bcrypt = Bcrypt(app)
 
 #migrate
 migrate = Migrate(app, db)
@@ -35,8 +39,8 @@ oid = OpenID(app, os.path.join(basedir, 'tmp'))
 #DebugToolbar
 app.debug = True
 DEBUG_TB_INTERCEPT_REDIRECTS = False
-toolbar = DebugToolbarExtension(app)
 
+toolbar = DebugToolbarExtension(app)
 #LOG DEBUG
 if not app.debug:
     import logging

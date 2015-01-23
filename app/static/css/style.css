@@ -56,3 +56,11 @@ REGISTER PAGE
 .register-field {
     padding-bottom: 15px;
 }
+
+.error {
+    color: red;
+}
+
+.error-register {
+    margin-top: -10px;
+}

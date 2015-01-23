@@ -1,15 +1,16 @@
 from flask.ext.wtf import Form
 from wtforms import StringField, BooleanField, TextAreaField, PasswordField, validators
-from wtforms.validators import DataRequired, InputRequired, Length
+from wtforms.validators import DataRequired, InputRequired, Length, Email
 from wtforms.fields.html5 import DateField
 
 class LoginForm(Form):
-    openid = StringField('openid', validators=[DataRequired()])
-    remember_me = BooleanField('remember_me', default=False) 
+    email = StringField('email', validators = [InputRequired(), Email()])
+    password = PasswordField('Password', validators = [InputRequired(), Length(min=6)])
 
 
 class RegistrationForm(Form):
-    email = StringField('openid', validators = [InputRequired(),])
+    nickname = StringField('nickname', validators = [InputRequired()])
+    email = StringField('email', validators = [InputRequired(), Email()])
     password = PasswordField('Password', validators = [InputRequired(), Length(min=6)])
 
 

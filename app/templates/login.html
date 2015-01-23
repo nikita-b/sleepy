@@ -1,34 +1,27 @@
 {% extends "base.html" %}
 
 {% block content %}
-<script type="text/javascript">
-function set_openid(openid, pr)
-{
-    u = openid.search('<username>')
-    if (u != -1) {
-        // openid requires username
-        user = prompt('Enter your ' + pr + ' username:')
-        openid = openid.substr(0, u) + user
-    }
-    form = document.forms['login'];
-    form.elements['openid'].value = openid
-}
-</script>
-<h1>Sigh In</h1>
-<form action="" method="POST" name="login">
-    {{ form.hidden_tag() }}
-    <p>
-        Please enter your OpenID, or select one of the providers below:<br>
-        {{ form.openid(size=80) }}<br>
-        {% for error in form.openid.errors %}
-        <span style="color: red;">[{{error}}]</span>
-        {% endfor%}<br>
-        |{% for pr in providers %}
-            <a href="javascript:set_openid('{{ pr.url }}', '{{ pr.name }}');">{{ pr.name }}</a> |
+
+<h1>Зайдите в свой дневник</h1>
+<div class="col-md-6 col-md-offset-3">
+    <form method="POST" name="login">
+        {{ form.hidden_tag() }}
+        <div class="input-group register-field">
+            <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw fa-lg"></i></span>
+            {{ form.email(class="form-control input-lg", placeholder="E-mail") }}   
+        </div>
+        {% for error in form.errors.email %}
+            <p class="error error-register">{{ error }}</p>
         {% endfor %}
-    </p>
-    <p> {{form.remember_me }} Remember Me</p>
-    <p><input type="submit" value="Sing In"></p>
-</form>
+        <div class="input-group register-field">
+            <span class="input-group-addon"><i class="fa fa-key fa-fw fa-lg"></i></span>
+            {{ form.password(class="form-control input-lg", placeholder="Пароль") }}
+        </div>
+        {% for error in form.errors.password %}
+            <p class="error error-register">{{ error }}</p>
+        {% endfor %}
+        <input class="btn btn-primary btn-lg btn-block" type="submit" value="Войти">
+    </form>
+</div>
 
 {% endblock %}

@@ -5,14 +5,26 @@
     <form method="POST">
         {{ form.hidden_tag() }}
         <div class="input-group register-field">
-            <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw fa-lg"></i></span>
-            {{ form.email(class="form-control input-lg", placeholder="E-mail") }}
-           
+            <span class="input-group-addon"><i class="fa fa-user-secret fa-fw fa-lg"></i></span>
+            {{ form.nickname(class="form-control input-lg", placeholder="Псевдоним") }}
         </div>
+        {% for error in form.errors.nickname %}
+            <p class="error error-register">{{ error }}</p>
+        {% endfor %}
+        <div class="input-group register-field">
+            <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw fa-lg"></i></span>
+            {{ form.email(class="form-control input-lg", placeholder="E-mail") }}   
+        </div>
+        {% for error in form.errors.email %}
+            <p class="error error-register">{{ error }}</p>
+        {% endfor %}
         <div class="input-group register-field">
             <span class="input-group-addon"><i class="fa fa-key fa-fw fa-lg"></i></span>
             {{ form.password(class="form-control input-lg", placeholder="Пароль") }}
         </div>
+        {% for error in form.errors.password %}
+            <p class="error error-register">{{ error }}</p>
+        {% endfor %}
         <input class="btn btn-primary btn-lg btn-block" type="submit" value="Зарегистрироваться">
     </form>
 </div>
