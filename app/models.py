@@ -79,17 +79,18 @@ class Post(db.Model):
             return self.description[:limit] + '...'
         return self.description
 
-    def voteup(self, post):
-        self.votes.append(post)
-        return self
+    def voteup(self, user):
+        if not self.is_voted(user):
+            self.votes.append(user)
+            return self
 
-    def votedown(self, post):
-        self.votes.remove(post)
-        return self
+    def votedown(self, user):
+        if self.is_voted(user):
+            self.votes.remove(user)
+            return self
 
-
-    def is_voted(self, post):
-        pass
+    def is_voted(self, user):
+        return user in self.votes
 
     def __repr__(self):
         return '<Dream %r>' % (self.id)

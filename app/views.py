@@ -152,10 +152,28 @@ def follow(nickname):
 def voteup(num):
     post = Post.query.filter_by(id=num).first()
     p = post.voteup(current_user)
+    if p is None:
+        flash('Вы уже голосовали!')
+        return redirect(url_for('index')) # Add other redirect
     db.session.add(p)
     db.session.commit()
     flash('Спасибо за ваш голос!')
     return redirect(url_for('index'))
+
+
+@app.route('/dream/<int:num>/down')
+@login_required
+def votedown(num):
+    post = Post.query.filter_by(id=num).first()
+    p = post.votedown(current_user)
+    if p is None:
+        flash('Вы еще не голосовали!')
+        return redirect(url_for('index')) # Add other redirect
+    db.session.add(p)
+    db.session.commit()
+    flash('Ваш голос удален!')
+    return redirect(url_for('index'))
+
 
 @app.route('/unfollow/<nickname>')
 @login_required

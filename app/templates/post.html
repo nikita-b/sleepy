@@ -5,6 +5,7 @@
     <div class="post-tools">
         <i>Сон {{ post.author.nickname }} записанный {{ momentjs(post.timestamp).fromNow() }}</i>
         <span class="plus"><a href="{{url_for('voteup', num=post.id)}}">+</a></span>
+        <span class="minus"><a href="{{url_for('votedown', num=post.id)}}">-</a></span>
         <span class="more-link"><a href="{{ url_for('dream', num=post.id)}}">Полностью</a></span>
     </div>
 </div>
