@@ -1,8 +1,7 @@
 from datetime import datetime
 
-from flask import render_template, flash, redirect, session, url_for, request, g
+from flask import render_template, flash, redirect, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
-from sqlalchemy import desc
 
 from app import app, db, lm, bcrypt
 from .cfilter import nl2br
@@ -11,20 +10,10 @@ from .models import User, Post, Article
 from config import POSTS_PER_PAGE
 
 
-###REMOVE
-import re
-from jinja2 import evalcontextfilter, Markup, escape
-_paragraph_re = re.compile(r'(?:\r\n|\r|\n){2,}')
-###REMOVE
-
-
-
 @app.route('/')
 def index():
-    #posts = g.user.followed_posts().paginate(page, POSTS_PER_PAGE, False)
     posts = Post.query.order_by(Post.id.desc()).limit(10).all()
-    return render_template('index.html', title = 'Новые сны',
-    posts=posts)
+    return render_template('index.html', title='Новые сны', posts=posts)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -77,7 +66,7 @@ def logout():
 @login_required
 def user(nickname, page=1):
     user = User.query.filter_by(nickname=nickname).first()
-    if user == None:
+    if user is None:
         flash('Пользователь %s не существует.' % nickname)
         return redirect(url_for('index'))
     posts = user.posts.paginate(page, POSTS_PER_PAGE, False)
@@ -101,6 +90,7 @@ def edit():
     user = User.query.filter_by(nickname=g.user.nickname).first()
     return render_template('editProfile.html', form=form, user=user)
 
+
 @app.route('/dream/add', methods=['GET', 'POST'])
 def add_dream():
     form = PostForm(request.form)
@@ -118,15 +108,16 @@ def add_dream():
     return render_template('add.html', form=form)
 
 
-
 @app.errorhandler(404)
 def not_found_error(error):
     return render_template('404.html'), 404
+
 
 @app.errorhandler(500)
 def internal_error(error):
     db.session.rollback()
     return render_template('500.html'), 500
+
 
 @app.route('/follow/<nickname>')
 @login_required
@@ -147,6 +138,7 @@ def follow(nickname):
     flash('You are now following ' + nickname + '!')
     return redirect(url_for('user', nickname=nickname))
 
+
 @app.route('/dream/<int:num>/up')
 @login_required
 def voteup(num):
@@ -154,7 +146,7 @@ def voteup(num):
     p = post.voteup(current_user)
     if p is None:
         flash('Вы уже голосовали!')
-        return redirect(url_for('index')) # Add other redirect
+        return redirect(url_for('index'))  # Add other redirect
     db.session.add(p)
     db.session.commit()
     flash('Спасибо за ваш голос!')
@@ -168,7 +160,7 @@ def votedown(num):
     p = post.votedown(current_user)
     if p is None:
         flash('Вы еще не голосовали!')
-        return redirect(url_for('index')) # Add other redirect
+        return redirect(url_for('index'))  # Add other redirect
     db.session.add(p)
     db.session.commit()
     flash('Ваш голос удален!')
@@ -198,15 +190,16 @@ def unfollow(nickname):
 @app.route('/dream/<int:num>')
 def dream(num):
     dream = Post.query.filter_by(id=int(num)).first()
-    if dream == None:
+    if dream is None:
         flash('Сна с номером #%s не существует :(' % num)
         return redirect(url_for('index'))
     return render_template('dream.html', dream=dream)
 
+
 @app.route('/article/<int:num>')
 def article(num):
     article = Article.query.filter_by(id=int(num)).first()
-    if article == None:
+    if article is None:
         flash('Такой статьи не существует')
         return redirect(url_for('index'))
     return render_template('article.html', article)
