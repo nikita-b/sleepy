@@ -64,3 +64,15 @@ REGISTER PAGE
 .error-register {
     margin-top: -10px;
 }
+/*
+#background{
+    background: #c9dbe9;
+    background: -webkit-linear-gradient(top, #c9dbe9 0%, #fff 100%);
+    background: -linear-gradient(top, #c9dbe9 0%, #fff 100%);
+    background: -moz-linear-gradient(top, #c9dbe9 0%, #fff 100%);
+}
+*/
+.navbar-default {
+    background-color: inherit;
+    border-bottom: 2px dotted #C5C5C5;
+}

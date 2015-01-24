@@ -1,10 +1,10 @@
 <div class="postwrapper">
     <div class="postrow">
-        <!--<div class="col-md-2"><img src="{{ post.author.avatar(50) }}"></div>-->
         <div class="">{{ post.fdescription(500)}}</div><br>
     </div>
     <div class="post-tools">
         <i>Сон {{ post.author.nickname }} записанный {{ momentjs(post.timestamp).fromNow() }}</i>
+        <span class="plus"><a href="{{url_for('voteup', num=post.id)}}">+</a></span>
         <span class="more-link"><a href="{{ url_for('dream', num=post.id)}}">Полностью</a></span>
     </div>
 </div>

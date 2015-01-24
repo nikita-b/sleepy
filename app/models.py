@@ -7,6 +7,10 @@ followers = db.Table('followers',
     db.Column('followed_id', db.Integer, db.ForeignKey('user.id'))
 )
 
+votes = db.Table('votes',
+    db.Column('post_id', db.Integer, db.ForeignKey('post.id')),
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
+)
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -48,32 +52,14 @@ class User(db.Model):
     def followed_posts(self):
         return Post.query.join(followers, (followers.c.followed_id == Post.user_id)).filter(followers.c.follower_id == self.id).order_by(Post.timestamp.desc())
 
-    @staticmethod
-    def make_unique_nickname(nickname):
-        if User.query.filter_by(nickname=nickname).first() is None:
-            return nickname
-        version = 2
-        while True:
-            new_nickname = nickname + str(version)
-            if User.query.filter_by(nickname=new_nickname).first() is None:
-                break
-            version += 1
-        return new_nickname
+    def is_authenticated(self): return True
 
-    def is_authenticated(self):
-        return True
+    def is_active(self): return True
 
-    def is_active(self):
-        return True
-
-    def is_anonymous(self):
-        return False
+    def is_anonymous(self): return False
 
     def get_id(self):
         return str(self.id)
-
-    def avatar(self, size):
-        return 'http://www.gravatar.com/avatar/%s?d=mm&s=%d' %(md5(self.email.encode('utf-8')).hexdigest(), size)
 
     def __repr__(self):
         return '<User %r>' % (self.nickname)
@@ -86,12 +72,24 @@ class Post(db.Model):
     description = db.Column(db.Text)
     datesleep = db.Column(db.DateTime)
     rating = db.Column(db.Integer)
+    votes = db.relationship('User', secondary=votes, backref=db.backref('bposts', lazy='dynamic'))
 
     def fdescription(self, limit):
         if len(self.description) > limit:
             return self.description[:limit] + '...'
         return self.description
 
+    def voteup(self, post):
+        self.votes.append(post)
+        return self
+
+    def votedown(self, post):
+        self.votes.remove(post)
+        return self
+
+
+    def is_voted(self, post):
+        pass
 
     def __repr__(self):
         return '<Dream %r>' % (self.id)

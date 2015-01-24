@@ -147,6 +147,15 @@ def follow(nickname):
     flash('You are now following ' + nickname + '!')
     return redirect(url_for('user', nickname=nickname))
 
+@app.route('/dream/<int:num>/up')
+@login_required
+def voteup(num):
+    post = Post.query.filter_by(id=num).first()
+    p = post.voteup(current_user)
+    db.session.add(p)
+    db.session.commit()
+    flash('Спасибо за ваш голос!')
+    return redirect(url_for('index'))
 
 @app.route('/unfollow/<nickname>')
 @login_required
