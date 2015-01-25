@@ -108,7 +108,7 @@ def add_dream():
             author = g.user
         else:
             author = User.query.filter_by(id=0).first()
-        post = Post(description=form.description.data, timestamp=datetime.utcnow(), author=author, datesleep=form.datesleep.data, rating=0)
+        post = Post(description=form.description.data, timestamp=datetime.utcnow(), author=author, datesleep=form.datesleep.data)
         db.session.add(post)
         db.session.commit()
         flash('Ваш сон опубликован, спасибо!')

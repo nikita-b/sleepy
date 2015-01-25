@@ -15,14 +15,15 @@
             <div class="col-md-6">
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox"> Опубликовать анонимно
+                        {{ form.anonymously() }} Опубликовать анонимно
+                    
                     </label>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox"> Опубликовать только для себя
+                        {{ form.yourself() }} Опубликовать только для себя
                     </label>
                 </div>    
             </div>
