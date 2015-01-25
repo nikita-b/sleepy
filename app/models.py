@@ -17,7 +17,7 @@ class User(db.Model):
 
     nickname = db.Column(db.String(64), index=True, unique=True)
     password = db.Column(db.String(255), nullable=False, default='')
-    first_name = db.Column(db.String(64), index=True, unique=True)
+    first_name = db.Column(db.String(64), index=True)
     last_name = db.Column(db.String(50), nullable=False, default='')
 
     email = db.Column(db.String(120), index=True, unique=True)
@@ -91,6 +91,9 @@ class Post(db.Model):
 
     def is_voted(self, user):
         return user in self.votes
+
+    def voted(self):
+        return len(self.votes)
 
     def __repr__(self):
         return '<Dream %r>' % (self.id)

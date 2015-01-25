@@ -6,21 +6,21 @@
         {{ form.hidden_tag() }}
         <div class="input-group register-field">
             <span class="input-group-addon"><i class="fa fa-user-secret fa-fw fa-lg"></i></span>
-            {{ form.nickname(class="form-control input-lg", placeholder="Псевдоним") }}
+            {{ form.nickname(class="form-control input-lg", placeholder="Псевдоним", title="Под этим псевдонимом вы сможете публиковать свои сны.", data_placement="right", data_toggle="tooltip", data_trigger="focus", data_container="body") }}
         </div>
         {% for error in form.errors.nickname %}
             <p class="error error-register">{{ error }}</p>
         {% endfor %}
         <div class="input-group register-field">
             <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw fa-lg"></i></span>
-            {{ form.email(class="form-control input-lg", placeholder="E-mail") }}   
+            {{ form.email(class="form-control input-lg", placeholder="E-mail", title="Мы вышлем вам пароль на этот адрес, если вы вдруг его забудете.", data_placement="right", data_trigger="focus", data_toggle="tooltip", data_container="body") }}   
         </div>
         {% for error in form.errors.email %}
             <p class="error error-register">{{ error }}</p>
         {% endfor %}
         <div class="input-group register-field">
             <span class="input-group-addon"><i class="fa fa-key fa-fw fa-lg"></i></span>
-            {{ form.password(class="form-control input-lg", placeholder="Пароль") }}
+            {{ form.password(class="form-control input-lg", placeholder="Пароль", title="Мы очень рекомендуем использовать пароль от 8 символов с цифрами, буквами и специальными символами. Но оставляем это на вашей совести, единственное требование это от 6 символов в пароле.", data_placement="right", data_trigger="focus", data_toggle="tooltip", data_container="body") }}
         </div>
         {% for error in form.errors.password %}
             <p class="error error-register">{{ error }}</p>

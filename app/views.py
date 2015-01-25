@@ -31,7 +31,15 @@ def login():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm(request.form)
-    if request.method == 'POST' and form.validate():
+    u = User.query.filter_by(nickname=form.nickname.data).first()
+    if u:  #if username is exist
+        flash('Такое имя пользователя уже сущесвует. Попробуйте выбрать другое.')
+
+    u2 = User.query.filter_by(email=form.email.data).first()
+    if u2:
+        flash('Пользователь с таким e-mail уже зарегистрирован. Если это вы, то восстановите пароль.')
+
+    if (not u) and (not u2) and request.method == 'POST' and form.validate():
         user = User(email=form.email.data, password=form.password.data, nickname=form.nickname.data)
         db.session.add(user)
         db.session.commit()

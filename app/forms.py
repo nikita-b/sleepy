@@ -1,17 +1,19 @@
 from flask.ext.wtf import Form
 from wtforms import StringField, BooleanField, TextAreaField, PasswordField, validators
+from wtforms.widgets import PasswordInput
 from wtforms.validators import DataRequired, InputRequired, Length, Email
 from wtforms.fields.html5 import DateField
 
+
 class LoginForm(Form):
-    email = StringField('email', validators = [InputRequired(), Email()])
-    password = PasswordField('Password', validators = [InputRequired(), Length(min=6)])
+    email = StringField('email', validators=[InputRequired(), Email()])
+    password = PasswordField('Password', validators=[InputRequired(), Length(min=6)], widget=PasswordInput())
 
 
 class RegistrationForm(Form):
-    nickname = StringField('nickname', validators = [InputRequired()])
-    email = StringField('email', validators = [InputRequired(), Email()])
-    password = PasswordField('Password', validators = [InputRequired(), Length(min=6)])
+    nickname = StringField('nickname', validators=[DataRequired()])
+    email = StringField('email', validators=[InputRequired(), Email()])
+    password = PasswordField('Password', validators=[InputRequired(), Length(min=6)], widget=PasswordInput())
 
 
 class EditForm(Form):
@@ -21,7 +23,6 @@ class EditForm(Form):
     def __init__(self, original_nickname, *args, **kwargs):
         Form.__init__(self, *args, **kwargs)
         self.original_nickname = original_nickname
-
 
     def validate(self):
         if not Form.validate(self):
