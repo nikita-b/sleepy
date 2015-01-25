@@ -13,9 +13,10 @@
 
 .postwrapper {
     background-color: #f3f3f3;
-    border: 1px dotted #bbbbbb;
+    border: 1px dotted #bbb;
     font-family: 'Monaco', 'Liberation Mono', 'Droid Sans Mono', 'Ubuntu Mono', 'Lucida Console', 'Helvetica Neue', monospace;
     margin: 10px 10px;
+    border-radius: 3px;
 }
 
 .postrow {
@@ -24,7 +25,7 @@
 
 
 .post-tools {
-    border-top: 2px dotted #bbbbbb;
+    border-top: 1px dotted #bbbbbb;
     padding: 0px 20px;
     color: rgb(178, 178, 178);
 }
@@ -64,15 +65,40 @@ REGISTER PAGE
 .error-register {
     margin-top: -10px;
 }
-/*
-#background{
-    background: #c9dbe9;
-    background: -webkit-linear-gradient(top, #c9dbe9 0%, #fff 100%);
-    background: -linear-gradient(top, #c9dbe9 0%, #fff 100%);
-    background: -moz-linear-gradient(top, #c9dbe9 0%, #fff 100%);
-}
-*/
+
 .navbar-default {
     background-color: inherit;
     border-bottom: 2px dotted #C5C5C5;
+}
+
+body {
+    background: #1EA0F7;
+}
+
+.navbar-default .navbar-brand {
+    color: #FFF;
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: #777;
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: #FFF;
+}
+
+
+.navbar-default .navbar-brand {
+    color: #FFF;
+    font-family: 'Bad Script', cursive;
+    font-size: 25px;
+    font-weight: bold;
+    top: 5px;
+    position: relative;
+}
+
+
+.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
+    color: #FFD500;
+    background-color: transparent;
 }
