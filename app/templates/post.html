@@ -1,12 +1,16 @@
 <div class="postwrapper">
     <div class="postrow">
-        <div class="">{{ post.fdescription(500)}}</div><br>
+        <div class="">{{ post.fdescription(500)}}</div><br><center><i class="fa fa-cloud"></i> <i class="fa fa-cloud"></i> <i class="fa fa-cloud"></i></center>
     </div>
     <div class="post-tools">
-        <span class="vote">{{ post.voted() }}</span>
-        <i>Сон {{ post.author.nickname }} записанный {{ momentjs(post.timestamp).fromNow() }}</i>
-        {% if not post.is_voted(current_user) %}<span class="plus"><a href="{{url_for('voteup', num=post.id)}}"><i class="fa fa-plus-square"></i></a></span> {% endif %}
-        {% if post.is_voted(current_user) %}<span class="minus"><a href="{{url_for('votedown', num=post.id)}}"><i class="fa fa-minus-square"></i></a></span> {% endif %}
-        <span class="more-link"><a href="{{ url_for('dream', num=post.id)}}">Полностью</a></span>
+            <span class="bottom-post-left">
+                <span class="vote">{{ post.voted() }}</span>
+                {% if not post.is_voted(current_user) %}<span class="plus"><a href="{{url_for('voteup', num=post.id)}}"><i class="fa fa-plus-square"></i></a></span> {% endif %}
+                {% if post.is_voted(current_user) %}<span class="minus"><a href="{{url_for('votedown', num=post.id)}}"><i class="fa fa-minus-square"></i></a></span> {% endif %}
+            </span>
+            <span class="bottom-post-right">
+                <span class="user-post"> <i class="fa fa-smile-o fa-lg"></i> <i> {{ post.author.nickname }} </i></span>
+                <span class="time-post"><i class="fa fa-clock-o fa-lg"></i> {{ momentjs(post.timestamp).calendar() }}</span>
+            </span>
     </div>
 </div>

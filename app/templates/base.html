@@ -22,43 +22,41 @@
     </script>
 </head>
 <body>
-    <div id="background">
-        <nav class="navbar navbar-default">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="/" title="Перейти на главную страницу">Дневник снов</a>
-                </div>
-                <div id="navbar" class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        {% if g.user.is_authenticated() %}
-                        <li><a href="{{ url_for('user', nickname=g.user.nickname) }}">Мой дневник</a></li>
-                        <li><a href="{{ url_for('logout') }}">Выйти</a></li>
-                        {% endif %}
-                    </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a href="{{ url_for('add_dream') }}">Записать сон</a></li>
-                    </ul>
-                </div><!--/.nav-collapse -->
-            </div>
-        </nav>
+    <nav class="navbar navbar-default">
         <div class="container">
-            {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                <div class="alert alert-success" role="alert">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-            {% endwith %}
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/" title="Перейти на главную страницу">Дневник снов</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    {% if g.user.is_authenticated() %}
+                    <li><a href="{{ url_for('user', nickname=g.user.nickname) }}">Мой дневник</a></li>
+                    <li><a href="{{ url_for('logout') }}">Выйти</a></li>
+                    {% endif %}
+                </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="{{ url_for('add_dream') }}">Записать сон</a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-success" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
 
-            {% block content %}{% endblock %}
-        </div><!-- /.container -->
-    </div><!-- /.background -->
+        {% block content %}{% endblock %}
+    </div><!-- /.container -->
 <script type="text/javascript" src="http://yastatic.net/jquery/2.1.3/jquery.min.js"></script>
 <script type="text/javascript" src="http://yastatic.net/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../static/js/picker.js"></script>

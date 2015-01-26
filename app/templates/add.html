@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="add-form">
-    <h2>Расскажите немного о вашем сне</h2>
+    <h2 class="h2-topic">Расскажите немного о вашем сне</h2>
     <form clas action="" method="POST">
         {{ form.hidden_tag() }}
         {{ form.description(class='form-control input-lg', rows=12) }}
@@ -28,7 +28,7 @@
                 </div>    
             </div>
         </div>
-        <input class="btn btn-primary btn-lg btn-block" type="submit" value="Отправить">
+        <input class="btn btn-success btn-lg btn-block" type="submit" value="Отправить">
     </form>
 </div>
 {% endblock %}

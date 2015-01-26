@@ -11,9 +11,13 @@
     width: 740px;
 }
 
+/* 
+POST 
+*/
+
 .postwrapper {
     background-color: #f3f3f3;
-    border: 1px dotted #bbb;
+    border: 1px dotted #1EA0F8;
     font-family: 'Monaco', 'Liberation Mono', 'Droid Sans Mono', 'Ubuntu Mono', 'Lucida Console', 'Helvetica Neue', monospace;
     margin: 10px 10px;
     border-radius: 3px;
@@ -34,10 +38,20 @@
     color: #6565FB;
 }
 
-.more-link {
+.bottom-post-right{
     float: right;
+    color: #5CB85C;
 }
 
+.user-post, .time-post {
+    font-size: 13px;
+    border-left: 1px dotted #bbbbbb;
+    padding-left: 8px;
+}
+
+.time-post {
+    margin-right: -10px;
+} 
 
 /*
 USER PROFILE
@@ -67,12 +81,12 @@ REGISTER PAGE
 }
 
 .navbar-default {
-    background-color: inherit;
+    background-color: #1EA0F7;
     border-bottom: 2px dotted #C5C5C5;
 }
 
 body {
-    background: #1EA0F7;
+/*    background: #1EA0F7; */
 }
 
 .navbar-default .navbar-brand {
@@ -101,4 +115,22 @@ body {
 .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
     color: #FFD500;
     background-color: transparent;
+}
+
+
+.h2-topic {
+    color: rgb(74, 70, 70);
+}
+
+.bottom-post-left {
+    margin-left: -20px;
+}
+
+.vote {
+    background-color: #5cb85c;
+    padding: .2em .6em .2em;
+    line-height: 1;
+    color: #fff;
+    vertical-align: baseline;
+    border-radius: .25em;
 }
