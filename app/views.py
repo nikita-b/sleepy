@@ -84,17 +84,21 @@ def user(nickname, page=1):
 @app.route('/edit', methods=['GET', 'POST'])
 @login_required
 def edit():
-    form = EditForm(g.user.nickname)
+    form = EditForm(request.form)
     if form.validate_on_submit():
-        g.user.nickname = form.nickname.data
-        g.user.about_me = form.about_me.data
+        #g.user.nickname = form.nickname.data
+        #g.user.about_me = form.about_me.data
         db.session.add(g.user)
         db.session.commit()
-        flash('Your changes have been saved')
+        flash('Изменения профиля сохранены')
         return redirect(url_for('edit'))
-    else:
-        form.nickname.data = g.user.nickname
-        form.about_me.data = g.user.about_me
+    #else:
+        #form.nickname.data = g.user.nickname
+        #form.about_me.data = g.user.about_me
+    form.first_name.data = g.user.first_name
+    form.last_name.data = g.user.last_name
+    form.email.data = g.user.email
+    form.about_me.data = g.user.about_me
     user = User.query.filter_by(nickname=g.user.nickname).first()
     return render_template('editProfile.html', form=form, user=user)
 

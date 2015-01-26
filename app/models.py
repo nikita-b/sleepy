@@ -1,5 +1,4 @@
 from app import db
-from hashlib import md5
 from app import bcrypt
 
 from datetime import datetime
@@ -24,10 +23,12 @@ class User(db.Model):
     last_name = db.Column(db.String(50), nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow())
 
+    anonymous = db.Column(db.Boolean, default=False)
     email = db.Column(db.String(120), index=True, unique=True)
     posts = db.relationship('Post', backref='author', lazy='dynamic')
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime)
+
     followed = db.relationship('User',
                                secondary=followers,
                                primaryjoin=(followers.c.follower_id == id),
@@ -56,11 +57,14 @@ class User(db.Model):
     def followed_posts(self):
         return Post.query.join(followers, (followers.c.followed_id == Post.user_id)).filter(followers.c.follower_id == self.id).order_by(Post.timestamp.desc())
 
-    def is_authenticated(self): return True
+    def is_authenticated(self):
+        return True
 
-    def is_active(self): return True
+    def is_active(self):
+        return True
 
-    def is_anonymous(self): return False
+    def is_anonymous(self):
+        return False
 
     def get_id(self):
         return str(self.id)
