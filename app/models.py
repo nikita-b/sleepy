@@ -42,7 +42,7 @@ class User(db.Model):
         self.email = email
 
     def isPrivate(self, user):
-        if self.anonymous and (self is not user):
+        if self.anonymous and (self != user):
             return True
 
     def follow(self, user):

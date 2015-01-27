@@ -89,8 +89,11 @@ def user(nickname, page=1):
 def edit():
     form = EditForm(request.form)
     if form.validate_on_submit():
-        #g.user.nickname = form.nickname.data
-        #g.user.about_me = form.about_me.data
+        g.user.about_me = form.about_me.data
+        g.user.email = form.email.data
+        g.user.last_name = form.first_name.data
+        g.user.first_name = form.first_name.data
+        g.user.anonymous = form.anonymous.data
         db.session.add(g.user)
         db.session.commit()
         flash('Изменения профиля сохранены')
@@ -102,6 +105,7 @@ def edit():
     form.last_name.data = g.user.last_name
     form.email.data = g.user.email
     form.about_me.data = g.user.about_me
+    form.anonymous.data = g.user.anonymous
     user = User.query.filter_by(nickname=g.user.nickname).first()
     return render_template('editProfile.html', form=form, user=user)
 

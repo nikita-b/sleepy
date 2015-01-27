@@ -18,10 +18,10 @@ class RegistrationForm(Form):
 
 class EditForm(Form):
     about_me = TextAreaField('about_me', validators=[Length(min=0, max=140)])
-    password = PasswordField('Password', validators=[InputRequired(), Length(min=6)], widget=PasswordInput())
+    password = PasswordField('Password')
     email = StringField('email', validators=[InputRequired(), Email()])
-    first_name = StringField('email', validators=[InputRequired()])
-    last_name = StringField('email', validators=[InputRequired()])
+    first_name = StringField('email')
+    last_name = StringField('email')
     anonymous = BooleanField('Anonymous', default=False)
 
 class PostForm(Form):
