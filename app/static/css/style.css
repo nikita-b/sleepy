@@ -49,6 +49,11 @@ POST
     padding-left: 8px;
 }
 
+.user-post a{
+    color: #5CB85C;
+    text-decoration: underline;
+}
+
 .time-post {
     margin-right: -10px;
 } 

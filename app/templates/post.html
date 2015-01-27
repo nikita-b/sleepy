@@ -9,7 +9,8 @@
                 {% if post.is_voted(current_user) %}<span class="minus"><a href="{{url_for('votedown', num=post.id)}}"><i class="fa fa-minus-square"></i></a></span> {% endif %}
             </span>
             <span class="bottom-post-right">
-                <span class="user-post"> <i class="fa fa-smile-o fa-lg"></i> <i> {{ post.author.nickname }} </i></span>
+                <span class="user-post"> <i class="fa fa-smile-o fa-lg"></i> 
+                    <a href="{{ url_for('user', nickname=post.author.nickname) }}"> {{ post.author.nickname }}</a></span>
                 <span class="time-post"><i class="fa fa-clock-o fa-lg"></i> {{ momentjs(post.timestamp).calendar() }}</span>
             </span>
     </div>

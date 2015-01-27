@@ -77,6 +77,9 @@ def user(nickname, page=1):
     if user is None:
         flash('Пользователь %s не существует.' % nickname)
         return redirect(url_for('index'))
+    if user.isPrivate(g.user):
+        flash('К сожалению профиль данного пользователя приватный :(')
+        return redirect(url_for('index'))
     posts = user.posts.paginate(page, POSTS_PER_PAGE, False)
     return render_template('user.html', user=user, posts=posts)
 

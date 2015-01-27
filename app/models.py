@@ -20,7 +20,7 @@ class User(db.Model):
     nickname = db.Column(db.String(64), index=True, unique=True)
     password = db.Column(db.String(255), nullable=False)
     first_name = db.Column(db.String(64), index=True)
-    last_name = db.Column(db.String(50), nullable=False)
+    last_name = db.Column(db.String(50))
     timestamp = db.Column(db.DateTime, default=datetime.utcnow())
 
     anonymous = db.Column(db.Boolean, default=False)
@@ -40,6 +40,10 @@ class User(db.Model):
         self.nickname = nickname
         self.password = bcrypt.generate_password_hash(password)
         self.email = email
+
+    def isPrivate(self, user):
+        if self.anonymous and (self is not user):
+            return True
 
     def follow(self, user):
         if not self.is_following(user):

@@ -35,6 +35,12 @@
           </div>
         </div>
         <div class="form-group">
+          <label class="col-md-3 control-label">Закрыть дневник от посещений:</label>
+          <div class="col-md-8">
+              {{ form.anonymous(class='form-control') }}
+          </div>
+        </div>
+        <div class="form-group">
           <label class="col-md-3 control-label"></label>
           <div class="col-md-8">
             <input class="btn btn-primary" value="Обновить" type="submit">
@@ -42,6 +48,7 @@
             <input class="btn btn-default" value="Сбросить" type="reset">
           </div>
         </div>
+
       </form>
     </div>
 {% endblock %}

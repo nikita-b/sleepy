@@ -22,7 +22,7 @@ class EditForm(Form):
     email = StringField('email', validators=[InputRequired(), Email()])
     first_name = StringField('email', validators=[InputRequired()])
     last_name = StringField('email', validators=[InputRequired()])
-
+    anonymous = BooleanField('Anonymous', default=False)
 
 class PostForm(Form):
     description = TextAreaField('description')
