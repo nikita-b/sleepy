@@ -91,7 +91,7 @@ def edit():
     if form.validate_on_submit():
         g.user.about_me = form.about_me.data
         g.user.email = form.email.data
-        g.user.last_name = form.first_name.data
+        g.user.last_name = form.last_name.data
         g.user.first_name = form.first_name.data
         g.user.anonymous = form.anonymous.data
         db.session.add(g.user)

@@ -1,54 +1,46 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="col-md-10 col-md-offset-1">
-    <form method="POST" name="edit" class="form-horizontal" role="form">
+<form method="POST" name="edit" class="form-horizontal" role="form">
     {{ form.hidden_tag() }}
-    <div class="form-group">
-        <label class="col-lg-3 control-label">О себе:</label>
-        <div class="col-lg-8">
-            {{ form.about_me(cols=32, rows=4, class='form-control') }}
-        </div>
-    </div>
-        <div class="form-group">
-          <label class="col-lg-3 control-label">Фамилия:</label>
-          <div class="col-lg-8">
-            {{ form.last_name(class='form-control') }}
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-lg-3 control-label">Имя:</label>
-          <div class="col-lg-8">
-            {{ form.first_name(class='form-control') }}
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-lg-3 control-label">Email:</label>
-          <div class="col-lg-8">
-            {{ form.email(class='form-control') }}
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-md-3 control-label">Пароль:</label>
-          <div class="col-md-8">
-              {{ form.password(size=24, class='form-control') }}
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-md-3 control-label">Закрыть дневник от посещений:</label>
-          <div class="col-md-8">
-              {{ form.anonymous(class='form-control') }}
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-md-3 control-label"></label>
-          <div class="col-md-8">
-            <input class="btn btn-primary" value="Обновить" type="submit">
-            <span></span>
-            <input class="btn btn-default" value="Сбросить" type="reset">
-          </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="input-group editForm">
+                <span class="input-group-addon"><i class="fa fa-male fa-fw fa-lg"></i></span>
+                {{ form.first_name(class='form-control input-lg', placeholder="Фамилия") }}
+            </div>
+            <div class="input-group editForm">
+                <span class="input-group-addon"><i class="fa fa-user fa-fw fa-lg"></i></span>
+                {{ form.last_name(class='form-control input-lg', placeholder="Имя") }}
+            </div>
+            <div class="input-group editForm">
+                <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw fa-lg"></i></span>
+                {{ form.email(class='form-control input-lg') }}
+            </div>
+            <div class="checkbox checkbox-primary">
+                   {{ form.anonymous() }}
+                <label for="anonymous">
+                 Это личный дневник
+                </label>
+            </div>
         </div>
 
-      </form>
+        <div class="col-md-6">
+            {{ form.about_me(cols=32, rows=4, class='form-control input-lg editabout', placeholder="О себе") }}
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-key fa-fw fa-lg"></i></span>
+                    {{ form.password(class='form-control input-lg', placeholder="Пароль") }}
+            </div>
+        </div>
     </div>
+
+<div class="row">
+    <div class="col-md-8">
+    </div>
+    <div class="col-md-4">
+        <input class="btn btn-primary" value="Сохранить" type="submit">
+        <input class="btn btn-default" value="Сбросить" type="reset">
+    </div>
+</div>
+</form>
 {% endblock %}
