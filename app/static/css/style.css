@@ -32,7 +32,7 @@ POST
 
 .postwrapper {
     background-color: #f3f3f3;
-    border: 1px dotted #1EA0F8;
+    border: 1px dotted #5CB85C;
     font-family: 'Monaco', 'Liberation Mono', 'Droid Sans Mono', 'Ubuntu Mono', 'Lucida Console', 'Helvetica Neue', monospace;
     margin: 10px 10px;
     border-radius: 3px;
@@ -98,6 +98,24 @@ USER PROFILE
 
 .user-info {
     margin-top: 0px;
+}
+
+/*
+PAGINATION
+*/
+
+.pagination {
+    color: red;
+}
+
+.pagination>.active>a, 
+.pagination>.active>span, 
+.pagination>.active>a:hover, 
+.pagination>.active>span:hover, 
+.pagination>.active>a:focus, 
+.pagination>.active>span:focus {
+    background-color: #FF9611;
+    border-color: #FF9611;
 }
 
 /*

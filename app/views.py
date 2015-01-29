@@ -11,8 +11,9 @@ from config import POSTS_PER_PAGE
 
 
 @app.route('/')
-def index():
-    posts = Post.query.order_by(Post.id.desc()).limit(10).all()
+@app.route('/<int:page>')
+def index(page=1):
+    posts = Post.query.order_by(Post.id.desc()).paginate(page, 3, True)
     return render_template('index.html', title='Новые сны', posts=posts)
 
 
