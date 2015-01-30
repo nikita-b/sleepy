@@ -89,7 +89,7 @@ class Post(db.Model):
     yourself = db.Column(db.Boolean, default=True)
 
 
-    def fdescription(self, limit):
+    def limit_description(self, limit):
         if len(self.description) > limit:
             return self.description[:limit] + '...'
         return self.description
