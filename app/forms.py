@@ -27,5 +27,5 @@ class EditForm(Form):
 class PostForm(Form):
     description = TextAreaField('description')
     datesleep = DateField('datesleep', format='%Y/%m/%d')
-    anonymously = BooleanField(False)
+    anonymously = BooleanField('Anonymously', default=False)
     yourself = BooleanField('checked', default=True)

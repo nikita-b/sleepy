@@ -17,11 +17,9 @@
                 <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw fa-lg"></i></span>
                 {{ form.email(class='form-control input-lg') }}
             </div>
-            <div class="checkbox checkbox-primary">
+            <div class="checkbox checkbox-primary checkbox-anonymous">
                    {{ form.anonymous() }}
-                <label for="anonymous">
-                    Это личный дневник
-                </label>
+                <label for="anonymous" title="При выборе этой опции ваш профиль не будет доступен другим пользователям" data-toggle="tooltip" data-placement="right">Это личный дневник</label>
             </div>
         </div>
 

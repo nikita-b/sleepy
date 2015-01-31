@@ -13,7 +13,7 @@ from config import POSTS_PER_PAGE
 @app.route('/')
 @app.route('/<int:page>')
 def index(page=1):
-    posts = Post.query.order_by(Post.id.desc()).paginate(page, 3, True)
+    posts = Post.query.filter_by(yourself=False, anonymously=False).order_by(Post.id.desc()).paginate(page, 3, True)
     return render_template('index.html', title='Новые сны', posts=posts)
 
 
@@ -120,7 +120,7 @@ def add_dream():
             author = g.user
         else:
             author = User.query.filter_by(id=0).first()
-        post = Post(description=form.description.data, timestamp=datetime.utcnow(), author=author, datesleep=form.datesleep.data)
+        post = Post(description=form.description.data, timestamp=datetime.utcnow(), author=author, datesleep=form.datesleep.data, anonymously = form.anonymously.data, yourself = form.yourself.data)
         db.session.add(post)
         db.session.commit()
         flash('Ваш сон опубликован, спасибо!')

@@ -26,6 +26,14 @@ EDIT
 .anonymousField {
     font-size: 22px;
 }
+
+label[for="anonymous"] {
+    border-bottom: 1px dashed #000080;
+}
+
+.checkbox-anonymous label[for="anonymous"] {
+    padding-left: 0px;
+}
 /* 
 POST 
 */
