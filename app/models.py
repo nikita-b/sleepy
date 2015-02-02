@@ -4,14 +4,14 @@ from app import bcrypt
 from datetime import datetime
 
 followers = db.Table('followers',
-    db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
-    db.Column('followed_id', db.Integer, db.ForeignKey('user.id'))
-)
+                     db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
+                     db.Column('followed_id', db.Integer, db.ForeignKey('user.id'))
+                     )
 
 votes = db.Table('votes',
-    db.Column('post_id', db.Integer, db.ForeignKey('post.id')),
-    db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
-)
+                 db.Column('post_id', db.Integer, db.ForeignKey('post.id')),
+                 db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
+                 )
 
 
 class User(db.Model):
@@ -59,7 +59,9 @@ class User(db.Model):
         return self.followed.filter(followers.c.followed_id == user.id).count() > 0
 
     def followed_posts(self):
-        return Post.query.join(followers, (followers.c.followed_id == Post.user_id)).filter(followers.c.follower_id == self.id).order_by(Post.timestamp.desc())
+        return Post.query.join(followers, (followers.c.followed_id == Post.user_id)) \
+                                            .filter(followers.c.follower_id == self.id) \
+                                            .order_by(Post.timestamp.desc())
 
     def is_authenticated(self):
         return True
@@ -87,7 +89,6 @@ class Post(db.Model):
     votes = db.relationship('User', secondary=votes, backref=db.backref('bposts', lazy='dynamic'))
     anonymously = db.Column(db.Boolean, default=False)
     yourself = db.Column(db.Boolean, default=True)
-
 
     def limit_description(self, limit):
         if len(self.description) > limit:

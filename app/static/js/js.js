@@ -9,3 +9,5 @@ $(function () {
 $(function () {
   $('[data-toggle="popover"]').popover()
 })
+
+moment.locale('ru')

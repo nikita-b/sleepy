@@ -13,7 +13,9 @@ from config import POSTS_PER_PAGE
 @app.route('/')
 @app.route('/<int:page>')
 def index(page=1):
-    posts = Post.query.filter_by(yourself=False, anonymously=False).order_by(Post.id.desc()).paginate(page, 3, True)
+    posts = Post.query.filter_by(yourself=False,
+                                 anonymously=False) \
+                                .order_by(Post.id.desc()).paginate(page, POSTS_PER_PAGE, True)
     return render_template('index.html', title='Новые сны', posts=posts)
 
 
@@ -33,15 +35,18 @@ def login():
 def register():
     form = RegistrationForm(request.form)
     u = User.query.filter_by(nickname=form.nickname.data).first()
-    if u:  #if username is exist
+    if u:  # if username is exist
         flash('Такое имя пользователя уже сущесвует. Попробуйте выбрать другое.')
 
     u2 = User.query.filter_by(email=form.email.data).first()
     if u2:
-        flash('Пользователь с таким e-mail уже зарегистрирован. Если это вы, то восстановите пароль.')
+        flash('Пользователь с таким e-mail уже зарегистрирован. \
+            Если это вы, то восстановите пароль.')
 
     if (not u) and (not u2) and request.method == 'POST' and form.validate():
-        user = User(email=form.email.data, password=form.password.data, nickname=form.nickname.data)
+        user = User(email=form.email.data,
+                    password=form.password.data,
+                    nickname=form.nickname.data)
         db.session.add(user)
         db.session.commit()
         login_user(user)
@@ -99,9 +104,6 @@ def edit():
         db.session.commit()
         flash('Изменения профиля сохранены')
         return redirect(url_for('edit'))
-    #else:
-        #form.nickname.data = g.user.nickname
-        #form.about_me.data = g.user.about_me
     form.first_name.data = g.user.first_name
     form.last_name.data = g.user.last_name
     form.email.data = g.user.email
@@ -120,7 +122,12 @@ def add_dream():
             author = g.user
         else:
             author = User.query.filter_by(id=0).first()
-        post = Post(description=form.description.data, timestamp=datetime.utcnow(), author=author, datesleep=form.datesleep.data, anonymously = form.anonymously.data, yourself = form.yourself.data)
+        post = Post(description=form.description.data,
+                    timestamp=datetime.utcnow(),
+                    author=author,
+                    datesleep=form.datesleep.data,
+                    anonymously=form.anonymously.data,
+                    yourself=form.yourself.data)
         db.session.add(post)
         db.session.commit()
         flash('Ваш сон опубликован, спасибо!')

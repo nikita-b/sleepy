@@ -7,6 +7,7 @@ from app import app, db
 from app.models import User, Post
 from datatime import datatime, timedelta
 
+
 class TestCase(unittest.TestCase):
     def setUp(self):
         app.config['TESTING'] = True
@@ -18,7 +19,6 @@ class TestCase(unittest.TestCase):
     def tearDown(self):
         db.session.remove()
         db.drop_all()
-
 
     def test_avatar(self):
         u = User(nickname='john', email='john@example.com')
@@ -62,6 +62,7 @@ class TestCase(unittest.TestCase):
         assert not u1.is_following(u2)
         assert u1.followed.count() == 0
         assert u2.followers.count() == 0
+
     def test_follow_posts(self):
         # make four users
         u1 = User(nickname='john', email='john@example.com')

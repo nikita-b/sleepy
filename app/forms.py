@@ -7,13 +7,17 @@ from wtforms.fields.html5 import DateField
 
 class LoginForm(Form):
     email = StringField('email', validators=[InputRequired(), Email()])
-    password = PasswordField('Password', validators=[InputRequired(), Length(min=6)], widget=PasswordInput())
+    password = PasswordField('Password',
+                             validators=[InputRequired(), Length(min=6)],
+                             widget=PasswordInput())
 
 
 class RegistrationForm(Form):
     nickname = StringField('nickname', validators=[DataRequired()])
     email = StringField('email', validators=[InputRequired(), Email()])
-    password = PasswordField('Password', validators=[InputRequired(), Length(min=6)], widget=PasswordInput())
+    password = PasswordField('Password',
+                             validators=[InputRequired(), Length(min=6)],
+                             widget=PasswordInput())
 
 
 class EditForm(Form):
@@ -23,6 +27,7 @@ class EditForm(Form):
     first_name = StringField('email')
     last_name = StringField('email')
     anonymous = BooleanField('Anonymous', default=False)
+
 
 class PostForm(Form):
     description = TextAreaField('description')
