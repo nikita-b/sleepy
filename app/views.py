@@ -223,13 +223,17 @@ def dream(num):
     return render_template('dream.html', dream=dream)
 
 
-@app.route('/article/<int:num>')
-def article(num):
-    article = Article.query.filter_by(id=int(num)).first()
+@app.route('/article/<title>')
+def article(title):
+    article = Article.query.filter_by(url=title).order_by(Article.id.desc()).first()
+    allarticle = Article.query.all()
+    article.inc_views()
+    db.session.add(article)
+    db.session.commit()
     if article is None:
         flash('Такой статьи не существует')
         return redirect(url_for('index'))
-    return render_template('article.html', article)
+    return render_template('article.html', article=article, all=allarticle)
 
 
 # ADMIN ARTICLE
@@ -263,7 +267,7 @@ def admin_add_article():
     form.category.choices = [(c.id, c.name) for c in category]
     if form.validate_on_submit():
         article = Article(title=form.title.data,
-                          text=form.text.data,
+                          content=form.content.data,
                           category=Category.query.filter_by(id=form.category.data).first())
         db.session.add(article)
         db.session.commit()
@@ -271,4 +275,3 @@ def admin_add_article():
         return redirect(url_for('admin_add'))
     flash('Ошибка заполнения')
     return redirect(url_for('admin_add'))
-

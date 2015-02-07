@@ -133,6 +133,19 @@ ADD PAGE
 .button-post-dream {
     margin-top: 10px;
 }
+/*
+ARTICLE
+*/
+
+.content {
+    background-color: #f3f3f3;
+    border-radius: 3px;
+}
+
+.right-block {
+    border-left: #777 dotted 1px;
+    padding-bottom: 20px;
+}
 
 /*
 REGISTER PAGE

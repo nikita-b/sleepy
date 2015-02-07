@@ -121,15 +121,19 @@ class Article(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(180), nullable=False)
     url = db.Column(db.String(180), unique=True, nullable=False)
-    text = db.Column(db.Text)
+    content = db.Column(db.Text)
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
     category = db.relationship('Category', backref=db.backref('article', lazy='dynamic'))
     views = db.Column(db.Integer, default=0)
 
-    def __init__(self, title, text, category):
+    def __init__(self, title, content, category):
         self.title = title
         self.url = translate_url(title)
         self.category = category
+        self.content = content
+
+    def inc_views(self):
+        self.views += 1
 
 
 class Category(db.Model):

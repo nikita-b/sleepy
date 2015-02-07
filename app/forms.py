@@ -40,7 +40,7 @@ class PostForm(Form):
 
 class ArticleAddForm(Form):
     title = StringField('Title')
-    text = TextAreaField('Text')
+    content = TextAreaField('Text')
     category = SelectField('Category', coerce=int, validators=[Optional()])
 
 
