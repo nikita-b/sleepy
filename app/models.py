@@ -92,11 +92,6 @@ class Post(db.Model):
     yourself = db.Column(db.Boolean, default=True)
     votes = db.relationship('User', secondary=votes, backref=db.backref('bposts', lazy='dynamic'))
 
-    def limit_description(self, limit):
-        if len(self.description) > limit:
-            return self.description[:limit] + '...'
-        return self.description
-
     def voteup(self, user):
         if not self.is_voted(user):
             self.votes.append(user)

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="content">
+        {% for article in lst %}
+            <h2>{{ article.title }}</h2>
+            <div class="text">{{ article.content | safe | truncate(255) }}</div>
+        {% endfor %}
+    </div>
+{% endblock %}

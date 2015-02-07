@@ -50,7 +50,7 @@ def register():
         db.session.add(user)
         db.session.commit()
         login_user(user)
-        flash('Спасибо за регистрацию!')
+        flash('Спасибо за регистрацию! Вы сразу можете пользоваться своим дневником.')
         return redirect(request.args.get("next") or url_for("index"))
     return render_template('register.html', form=form, title='Создание своего дневника :)')
 
@@ -223,10 +223,16 @@ def dream(num):
     return render_template('dream.html', dream=dream)
 
 
+@app.route('/article')
+def list_article():
+    list_article = Article.query.all()
+    return render_template('list_article.html', lst=list_article)
+
+
 @app.route('/article/<title>')
 def article(title):
-    article = Article.query.filter_by(url=title).order_by(Article.id.desc()).first()
-    allarticle = Article.query.all()
+    article = Article.query.filter_by(url=title).first()
+    allarticle = Article.query.order_by(Article.id.desc()).all()
     article.inc_views()
     db.session.add(article)
     db.session.commit()
