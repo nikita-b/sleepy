@@ -1,6 +1,8 @@
 from app import db
 from app import bcrypt
 
+from .utils import translate_url
+
 from datetime import datetime
 
 followers = db.Table('followers',
@@ -86,9 +88,9 @@ class Post(db.Model):
     description = db.Column(db.Text)
     datesleep = db.Column(db.DateTime)
     rating = db.Column(db.Integer)
-    votes = db.relationship('User', secondary=votes, backref=db.backref('bposts', lazy='dynamic'))
     anonymously = db.Column(db.Boolean, default=False)
     yourself = db.Column(db.Boolean, default=True)
+    votes = db.relationship('User', secondary=votes, backref=db.backref('bposts', lazy='dynamic'))
 
     def limit_description(self, limit):
         if len(self.description) > limit:
@@ -117,5 +119,25 @@ class Post(db.Model):
 
 class Article(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(180))
+    title = db.Column(db.String(180), nullable=False)
+    url = db.Column(db.String(180), unique=True, nullable=False)
     text = db.Column(db.Text)
+    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
+    category = db.relationship('Category', backref=db.backref('article', lazy='dynamic'))
+    views = db.Column(db.Integer, default=0)
+
+    def __init__(self, title, text, category):
+        self.title = title
+        self.url = translate_url(title)
+        self.category = category
+
+
+class Category(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80))
+
+    def __init__(self, name):
+        self.name = name
+
+    def __repr__(self):
+        return '<Category {}>'.format(self.name)

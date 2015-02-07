@@ -1,7 +1,7 @@
 from flask.ext.wtf import Form
-from wtforms import StringField, BooleanField, TextAreaField, PasswordField
+from wtforms import StringField, BooleanField, TextAreaField, PasswordField, SelectField
 from wtforms.widgets import PasswordInput
-from wtforms.validators import DataRequired, InputRequired, Length, Email
+from wtforms.validators import DataRequired, InputRequired, Length, Email, Optional
 from wtforms.fields.html5 import DateField
 
 
@@ -34,3 +34,15 @@ class PostForm(Form):
     datesleep = DateField('datesleep', format='%Y/%m/%d')
     anonymously = BooleanField('Anonymously', default=False)
     yourself = BooleanField('checked', default=True)
+
+
+# Admin
+
+class ArticleAddForm(Form):
+    title = StringField('Title')
+    text = TextAreaField('Text')
+    category = SelectField('Category', coerce=int, validators=[Optional()])
+
+
+class CategoryAddForm(Form):
+    name = StringField('Name')

@@ -5,8 +5,8 @@ from flask.ext.login import login_user, logout_user, current_user, login_require
 
 from app import app, db, lm, bcrypt
 from .cfilter import nl2br
-from .forms import LoginForm, EditForm, PostForm, RegistrationForm
-from .models import User, Post, Article
+from .forms import LoginForm, EditForm, PostForm, RegistrationForm, ArticleAddForm, CategoryAddForm
+from .models import User, Post, Article, Category
 from config import POSTS_PER_PAGE
 
 
@@ -230,3 +230,45 @@ def article(num):
         flash('Такой статьи не существует')
         return redirect(url_for('index'))
     return render_template('article.html', article)
+
+
+# ADMIN ARTICLE
+
+@app.route('/admin/add')
+def admin_add():
+    category = Category.query.all()
+    formArticle = ArticleAddForm()
+    formArticle.category.choices = [(c.id, c.name) for c in category]
+    return render_template('admin_article.html',
+                           formArticle=formArticle,
+                           formCategory=CategoryAddForm())
+
+
+@app.route('/admin/add/category', methods=['POST'])
+def admin_add_category():
+    category_form = CategoryAddForm(request.form)
+
+    if category_form.validate_on_submit():
+        category = Category(name=category_form.name.data)
+        db.session.add(category)
+        db.session.commit()
+        flash('Успешно')
+        return redirect(url_for('admin_add'))
+
+
+@app.route('/admin/add/article', methods=['POST'])
+def admin_add_article():
+    category = Category.query.all()
+    form = ArticleAddForm(request.form)
+    form.category.choices = [(c.id, c.name) for c in category]
+    if form.validate_on_submit():
+        article = Article(title=form.title.data,
+                          text=form.text.data,
+                          category=Category.query.filter_by(id=form.category.data).first())
+        db.session.add(article)
+        db.session.commit()
+        flash('Статья опубликована')
+        return redirect(url_for('admin_add'))
+    flash('Ошибка заполнения')
+    return redirect(url_for('admin_add'))
+

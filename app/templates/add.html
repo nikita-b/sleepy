@@ -10,26 +10,28 @@
         рекомендации о том, как лучше запоминать сны, то смотрите <a href="#">тут</a>.</span>
         <label class="datasleep" for="datasleep">Когда он приснился?</label>
         {{ form.datesleep(class='form-control datepicker') }}
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="checkbox checkbox-primary">
-                        {{ form.anonymously() }}
-                    <label for="anonymously">
-                         Опубликовать анонимно
-                    </label>
+        
+        {% if g.user.is_authenticated() %}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="checkbox checkbox-primary">
+                            {{ form.anonymously() }}
+                        <label for="anonymously">
+                             Опубликовать анонимно
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="checkbox checkbox-primary">
+                            {{ form.yourself() }} 
+                        <label for="yourself">
+                            Опубликовать только для себя
+                        </label>
+                    </div>    
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="checkbox checkbox-primary">
-                        {{ form.yourself() }} 
-                    <label for="yourself">
-                        Опубликовать только для себя
-                    </label>
-                </div>    
-            </div>
-        </div>
-        <input class="btn-primary btn-lg btn-block" type="submit" value="Отправить">
+        {% endif %}
+        <input class="btn-primary btn-lg btn-block button-post-dream" type="submit" value="Отправить">
     </form>
 </div>
 {% endblock %}
