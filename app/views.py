@@ -216,16 +216,17 @@ def unfollow(nickname):
 
 @app.route('/dream/<int:num>')
 def dream(num):
+    article = Article.query.order_by(Article.id.desc()).all()
     dream = Post.query.filter_by(id=int(num)).first()
     if dream is None:
         flash('Сна с номером #%s не существует :(' % num)
         return redirect(url_for('index'))
-    return render_template('dream.html', dream=dream)
+    return render_template('dream.html', dream=dream, all=article)
 
 
 @app.route('/article')
 def list_article():
-    list_article = Article.query.all()
+    list_article = Article.query.order_by(Article.id.desc()).all()
     return render_template('list_article.html', lst=list_article)
 
 
@@ -257,7 +258,6 @@ def admin_add():
 @app.route('/admin/add/category', methods=['POST'])
 def admin_add_category():
     category_form = CategoryAddForm(request.form)
-
     if category_form.validate_on_submit():
         category = Category(name=category_form.name.data)
         db.session.add(category)

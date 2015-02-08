@@ -1,10 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="row">
-    <div class="col-md-8"><div class="well">{{ dream.description| nl2br }}</div></div>
-    <div class="col-md-4">.col-md-4</div>
-</div>
-
-
+    <div class="row content">
+        <div class="col-md-8 description-dream">
+            {{ dream.description| nl2br }}
+        </div>
+        <div class="col-md-4 right-block">
+            <h3>Новые статьи</h3>
+            {% for article in all %}
+                <a href="{{ url_for('article', title=article.url)}}">{{ article.title }}<br>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

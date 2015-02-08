@@ -35,7 +35,7 @@ label[for="anonymous"] {
     padding-left: 0px;
 }
 /* 
-POST 
+POST DREAM
 */
 
 .postwrapper {
@@ -102,6 +102,20 @@ HEADER
 }
 
 /*
+FOOTER
+*/
+.base-footer {
+    background-color: rgb(30, 160, 247);
+    border-radius: 5px;
+    padding-top: 7px;
+}
+
+.text-footer {
+    float:right;
+    color: white;
+}
+
+/*
 USER PROFILE
 */
 .user-top {
@@ -149,6 +163,15 @@ ARTICLE
 .right-block {
     border-left: #777 dotted 1px;
     padding-bottom: 20px;
+}
+
+
+/*
+DREAM PAGE
+*/
+
+.description-dream {
+    margin-top: 20px;
 }
 
 /*
