@@ -106,7 +106,7 @@ FOOTER
 */
 .base-footer {
     background-color: rgb(30, 160, 247);
-    border-radius: 5px;
+    border-radius: 0px 0px 5px 5px;
     padding-top: 7px;
 }
 
@@ -156,8 +156,17 @@ ARTICLE
 */
 
 .content {
+    border: 1px solid rgb(30, 160, 247);
+    border-bottom: none;
     background-color: #f3f3f3;
-    border-radius: 3px;
+    border-radius: 3px 3px 0px 0px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.content h1 {
+    text-align: center;
+    margin-bottom: 10px;
 }
 
 .right-block {
@@ -192,11 +201,10 @@ REGISTER PAGE
 
 .navbar-default {
     background-color: #1EA0F7;
-    border-bottom: 10px dotted #BCC01C;
 }
 
 body {
-    background: #800080;
+    background-image: url("../img/back.jpg");
 }
 
 .navbar-default .navbar-brand {
