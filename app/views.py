@@ -16,7 +16,7 @@ def index(page=1):
     posts = Post.query.filter_by(yourself=False,
                                  anonymously=False) \
                                 .order_by(Post.id.desc()).paginate(page, POSTS_PER_PAGE, True)
-    return render_template('index.html', title='Новые сны', posts=posts)
+    return render_template('index.html', title='Последние сны', posts=posts)
 
 
 @app.route('/login', methods=['GET', 'POST'])

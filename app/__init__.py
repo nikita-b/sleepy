@@ -35,8 +35,6 @@ lm.init_app(app)
 lm.login_view = 'login'
 
 # DebugToolbar
-app.debug = True
-DEBUG_TB_INTERCEPT_REDIRECTS = False
 
 toolbar = DebugToolbarExtension(app)
 # LOG DEBUG
