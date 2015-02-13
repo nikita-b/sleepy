@@ -1,7 +1,13 @@
 import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-SQLALCHEMY_DATABASE_URI = 'postgresql://nikita:123@localhost/testdb'
+USER_DATABASE = 'nikita'
+PASS_DATABASE = '123'
+NAME_DATABASE = 'testdb'
+
+SQLALCHEMY_DATABASE_URI = 'postgresql://%s:%s@localhost/%s' % (USER_DATABASE,
+                                                               PASS_DATABASE,
+                                                               NAME_DATABASE)
 
 WTF_CSRF_ENABLED = True
 SECRET_KEY = 'top-secret'
