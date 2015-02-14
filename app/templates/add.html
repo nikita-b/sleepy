@@ -9,7 +9,7 @@
         <span class="help-block">Постарайтесь описать основной сюжет сна как можно подробней. Если хотите почитать
         рекомендации о том, как лучше запоминать сны, то смотрите <a href="#">тут</a>.</span>
         <label class="datasleep" for="datasleep">Когда он приснился?</label>
-        {{ form.datesleep(class='form-control datepicker') }}
+        {{ form.datesleep(class='form-control datepicker', placeholder='Выберите дату') }}
         
         {% if g.user.is_authenticated() %}
             <div class="row">

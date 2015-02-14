@@ -1,5 +1,6 @@
 $('.datepicker').pickadate({
-    hiddenName: true
+    hiddenName: true,
+    max: true
 })
 
 $(function () {

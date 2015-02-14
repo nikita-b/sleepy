@@ -252,3 +252,13 @@ body {
     vertical-align: baseline;
     border-radius: .25em;
 }
+
+
+
+/* 
+TRASH 
+*/
+
+.datepicker {
+    cursor: pointer !important;
+}

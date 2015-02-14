@@ -50,7 +50,7 @@ def register():
         db.session.add(user)
         db.session.commit()
         login_user(user)
-        flash('Спасибо за регистрацию! Вы сразу можете пользоваться своим дневником.')
+        flash('Спасибо за регистрацию! Вы теперь можете воспользоваться своим дневником.')
         return redirect(request.args.get("next") or url_for("index"))
     return render_template('register.html', form=form, title='Создание своего дневника :)')
 
