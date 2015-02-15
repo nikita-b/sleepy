@@ -5,5 +5,4 @@ flask
 *.mo
 tmp
 instance
-alembic.ini
 *.sublime-*
