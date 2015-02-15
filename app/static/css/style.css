@@ -55,6 +55,7 @@ POST DREAM
 
 .postrow {
     padding: 5px 15px;
+    position: relative;
 }
 
 
@@ -87,6 +88,12 @@ POST DREAM
 .time-post {
     margin-right: -10px;
 } 
+
+.edit-dream{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
 /*
 HEADER
 */

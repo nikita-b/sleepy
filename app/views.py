@@ -175,7 +175,6 @@ def edit_dream(num):
         return redirect(url_for('index'))
 
     form = PostForm(request.form)
-    
     if form.validate_on_submit():
         post.description = form.description.data
         post.datesleep = form.datesleep.data

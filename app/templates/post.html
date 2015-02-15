@@ -1,5 +1,8 @@
 <div class="postwrapper">
     <div class="postrow">
+        {% if post.author == g.user %}
+            <div class="edit-dream"><a href="{{ url_for('edit_dream', num=post.id) }}"><i class="fa fa-pencil-square-o"></i></a></div>
+        {% endif %}
         <div class="">{{ post.description | truncate(500, end='') }}
         {% if post.description | length >500  %}
             <a href="{{ url_for('dream', num=post.id) }}">Полностью</a>
