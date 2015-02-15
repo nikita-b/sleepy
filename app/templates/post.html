@@ -1,6 +1,10 @@
 <div class="postwrapper">
     <div class="postrow">
-        <div class="">{{ post.description | truncate(255) }}</div><br>
+        <div class="">{{ post.description | truncate(500, end='') }}
+        {% if post.description | length >500  %}
+            <a href="{{ url_for('dream', num=post.id) }}">Полностью</a>
+        {% endif %}
+        </div><br>
     </div>
     <div class="post-tools">
             <span class="bottom-post-left">

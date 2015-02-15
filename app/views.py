@@ -166,6 +166,34 @@ def follow(nickname):
     return redirect(url_for('user', nickname=nickname))
 
 
+@app.route('/dream/<int:num>/edit', methods=['GET', 'POST'])
+@login_required
+def edit_dream(num):
+    post = Post.query.filter_by(id=num).first()
+    if g.user != post.author:
+        flash('К сожалению вы не можете редактировать эту запись.')
+        return redirect(url_for('index'))
+
+    form = PostForm(request.form)
+    
+    if form.validate_on_submit():
+        post.description = form.description.data
+        post.datesleep = form.datesleep.data
+        post.anonymously = form.anonymously.data
+        post.yourself = form.yourself.data
+        db.session.add(post)
+        db.session.commit()
+        flash('Изменения внесены.')
+        return redirect(url_for('edit_dream', num=post.id))
+
+    form.description.data = post.description
+    form.datesleep.data = post.datesleep
+    form.anonymously.data = post.anonymously
+    form.yourself.data = post.yourself
+
+    return render_template('edit_dream.html', form=form, post=post)
+
+
 @app.route('/dream/<int:num>/up')
 @login_required
 def voteup(num):

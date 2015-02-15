@@ -9,11 +9,8 @@
             </div>
         </div>
          <div class="col-md-4 right-block">
-            <h3>Новые статьи</h3>
-            {% for article in all %}
-                <a href="{{ url_for('article', title=article.url)}}">{{ article.title }}<br>
-            {% endfor %}
-         </div>
+            {% include 'block_list_article.html' %}
+        </div>
     </div>
 
 {% endblock %}
