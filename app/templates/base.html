@@ -36,14 +36,19 @@
                     {% if g.user.is_anonymous() %}
                         <li><a href="{{ url_for('register') }}">Создать дневник</a>
                         <li><a href="{{ url_for('login') }}">Войти</a>
-                    {% endif %}                    
+                    {% endif %}
+
                     {% if g.user.is_authenticated() %}
-                        <li><a href="{{ url_for('user', nickname=g.user.nickname) }}">Мой дневник</a></li>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Мой дневник <span class="caret"></span></a>
+                      <ul class="dropdown-menu" role="menu">
+                        <li><a href="{{ url_for('user', nickname=g.user.nickname) }}">Моя страница</a></li>
+                        <li><a href="{{ url_for('edit') }}">Настройки</a></li>
+                        <li><a href="{{ url_for('logout') }}">Выйти</a></li>
+                      </ul>
+                    </li>
                     {% endif %}
                     <li><a href="{{ url_for('list_article') }}">Статьи</a></li>
-                    {% if g.user.is_authenticated() %}
-                        <li><a href="{{ url_for('logout') }}">Выйти</a></li>
-                    {% endif %}
                 </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a class="mydiary" href="{{ url_for('add_dream') }}">Записать сон</a></li>
