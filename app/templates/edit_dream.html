@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+
+<form clas action="" method="POST">
+{{ form.hidden_tag() }} 
+<div class="row">
+    <div class="col-md-8">
+        <div>
+            {{ form.description(class='form-control input-lg', rows=12) }}
+            {% for error in form.description.errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-md-4 right-block">
+        {{ form.datesleep(class='form-control datepicker', placeholder='Выберите дату') }}
+        {% for error in form.datesleep.errors %}
+            {{ error }}
+        {% endfor %}
+        <div class="checkbox checkbox-primary">
+            {{ form.yourself() }} 
+            <label for="yourself">
+                Опубликовать только для себя
+            </label>
+            {% for error in form.yourself.errors %}
+                {{ error }}
+            {% endfor %}
+        </div>    
+        <input class="btn-primary btn-lg btn-block button-post-dream" type="submit" value="Сохранить">
+    </div>
+
+</div>
+</form>
+{% endblock %}

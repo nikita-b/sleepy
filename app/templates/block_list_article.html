@@ -1,0 +1,5 @@
+<h3>Новые статьи</h3>
+{% for article in all %}
+    <a href="{{ url_for('article', title=article.url)}}">{{ article.title }}</a><br>
+
+{% endfor %}
