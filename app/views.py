@@ -87,7 +87,7 @@ def user(nickname, page=1):
         flash('К сожалению профиль данного пользователя приватный :(')
         return redirect(url_for('index'))
     posts = user.posts.order_by(Post.id.desc()).paginate(page, POSTS_PER_PAGE, False)
-    return render_template('user.html', user=user, posts=posts)
+    return render_template('user.html', user=user, posts=posts, title='Сны '+user.nickname)
 
 
 @app.route('/edit', methods=['GET', 'POST'])
@@ -192,6 +192,18 @@ def edit_dream(num):
 
     return render_template('edit_dream.html', form=form, post=post)
 
+
+@app.route('/dream/<int:num>/delete', methods=['GET', 'POST'])
+@login_required
+def delete_dream(num):
+    post = Post.query.filter_by(id=num).first()
+    if g.user != post.author:
+        flash('К сожалению вы не можете удалить эту запись.')
+        return redirect(url_for('index'))
+    db.session.delete(post)
+    db.session.commit()
+    flash('Сон удален')
+    return redirect(url_for('index'))
 
 @app.route('/dream/<int:num>/up')
 @login_required
