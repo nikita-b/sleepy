@@ -45,6 +45,7 @@
             <form method="POST" class="form-horizontal add-category" name="add-category" role="form"  action="{{ url_for('admin_add_category') }}">
                 {{ formCategory.hidden_tag() }}
                 <div class="form-group">
+                    <label>Название:</label>
                     {{ formCategory.name(class="form-control") }}
                 </div>
                 <input class="btn btn-success btn-block" type="submit" value="Добавить">
