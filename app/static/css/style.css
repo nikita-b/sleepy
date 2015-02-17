@@ -1,3 +1,5 @@
+@import url(http://fonts.googleapis.com/css?family=Bad+Script&subset=latin,cyrillic);
+
 .add-form {
     max-width: 600px;
     margin: 0 auto;
@@ -229,7 +231,7 @@ body {
 
 .navbar-default .navbar-brand {
     color: #FFF;
-    font-family: 'Bad Script', cursive;
+    font-family: 'Bad Script', cursive !important;
     font-size: 25px;
     font-weight: bold;
     top: 5px;
