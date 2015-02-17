@@ -27,7 +27,8 @@ def login():
         if user and bcrypt.check_password_hash(user.password, form.password.data):
                 login_user(user)
                 return redirect(request.args.get("next") or url_for("index"))
-        flash('К сожалению такого пользователя нет в нашей базе данных :(')
+        flash('Вы неправильно ввели пароль или E-mail. \
+               Попробуйте еще раз или восстановите пароль.')
     return render_template('login.html', title='Зайти в свой дневник', form=form)
 
 
@@ -36,7 +37,7 @@ def register():
     form = RegistrationForm(request.form)
     u = User.query.filter_by(nickname=form.nickname.data).first()
     if u:  # if username is exist
-        flash('Такое имя пользователя уже сущесвует. Попробуйте выбрать другое.')
+        flash('Такое имя пользователя уже существует. Попробуйте выбрать другое.')
 
     u2 = User.query.filter_by(email=form.email.data).first()
     if u2:
@@ -83,7 +84,7 @@ def user(nickname, page=1):
     if user is None:
         flash('Пользователь %s не существует.' % nickname)
         return redirect(url_for('index'))
-    if user.isPrivate(g.user):
+    if user.is_private(g.user):
         flash('К сожалению профиль данного пользователя приватный :(')
         return redirect(url_for('index'))
     posts = user.posts.order_by(Post.id.desc()).paginate(page, POSTS_PER_PAGE, False)
@@ -280,43 +281,3 @@ def article(title):
         flash('Такой статьи не существует')
         return redirect(url_for('index'))
     return render_template('article.html', article=article, all=allarticle)
-
-
-# ADMIN ARTICLE
-
-@app.route('/admin/add')
-def admin_add():
-    category = Category.query.all()
-    formArticle = ArticleAddForm()
-    formArticle.category.choices = [(c.id, c.name) for c in category]
-    return render_template('admin_article.html',
-                           formArticle=formArticle,
-                           formCategory=CategoryAddForm())
-
-
-@app.route('/admin/add/category', methods=['POST'])
-def admin_add_category():
-    category_form = CategoryAddForm(request.form)
-    if category_form.validate_on_submit():
-        category = Category(name=category_form.name.data)
-        db.session.add(category)
-        db.session.commit()
-        flash('Успешно')
-        return redirect(url_for('admin_add'))
-
-
-@app.route('/admin/add/article', methods=['POST'])
-def admin_add_article():
-    category = Category.query.all()
-    form = ArticleAddForm(request.form)
-    form.category.choices = [(c.id, c.name) for c in category]
-    if form.validate_on_submit():
-        article = Article(title=form.title.data,
-                          content=form.content.data,
-                          category=Category.query.filter_by(id=form.category.data).first())
-        db.session.add(article)
-        db.session.commit()
-        flash('Статья опубликована')
-        return redirect(url_for('admin_add'))
-    flash('Ошибка заполнения')
-    return redirect(url_for('admin_add'))

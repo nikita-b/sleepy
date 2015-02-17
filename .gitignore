@@ -6,3 +6,4 @@ flask
 tmp
 instance
 *.sublime-*
+app/static/upload

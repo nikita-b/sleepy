@@ -85,10 +85,6 @@ POST DREAM
     text-decoration: underline;
 }
 
-.time-post {
-    margin-right: -10px;
-} 
-
 .edit-dream{
     position: absolute;
     top: 5px;
@@ -105,10 +101,6 @@ HEADER
     color: #fff;
     background-color: #FF9611;
     box-shadow: 0 0 0 1px rgba(0,0,0,.15) inset,0 0 6px rgba(0,0,0,.2) inset;
-}
-
-.mydiary {
-    background-color: #FF9611;
 }
 
 .menu-nav {
@@ -213,9 +205,10 @@ REGISTER PAGE
     margin-top: -10px;
 }
 
-.navbar-default {
+.navbar-header, .navbar-default {
     background-color: #1EA0F7;
 }
+
 
 body {
     background-image: url("../img/back.jpg");

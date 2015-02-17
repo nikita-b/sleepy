@@ -1,9 +1,17 @@
 from app import db
 from app import bcrypt
+from app import admin
 
 from .utils import translate_url
 
 from datetime import datetime
+import os.path as op
+
+from flask.ext.admin import Admin, BaseView, expose
+from flask.ext.admin.contrib.sqla import ModelView
+from flask.ext.admin.contrib.fileadmin import FileAdmin
+from flask.ext.login import current_user
+
 
 followers = db.Table('followers',
                      db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
@@ -43,9 +51,12 @@ class User(db.Model):
         self.password = bcrypt.generate_password_hash(password)
         self.email = email
 
-    def isPrivate(self, user):
+    def is_private(self, user):
         if self.anonymous and (self != user):
             return True
+
+    def is_admin(self):
+        return self.id == 1
 
     def follow(self, user):
         if not self.is_following(user):
@@ -130,6 +141,9 @@ class Article(db.Model):
     def inc_views(self):
         self.views += 1
 
+    def __repr__(self):
+        return '<%s>' % (self.title)
+
 
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -139,4 +153,32 @@ class Category(db.Model):
         self.name = name
 
     def __repr__(self):
-        return '<Category {}>'.format(self.name)
+        return '<%s>' % (self.name)
+
+
+# class MyView(ModelView):
+#     def is_accessible(self):
+#         return current_user.is_admin()
+
+
+# class MyFileView(FileAdmin):
+#     def is_accessible(self):
+#         return current_user.is_admin()
+
+
+# class IndexAdmin(BaseView):
+#     @expose('/')
+#     def index(self):
+#         return self.render('index.html')
+
+#     def is_accessible(self):
+#         return current_user.is_admin()
+
+
+# MODELS ADMIN
+admin.add_view(ModelView(Post, db.session))
+admin.add_view(ModelView(User, db.session))
+admin.add_view(ModelView(Article, db.session))
+admin.add_view(ModelView(Category, db.session))
+path = op.join(op.dirname(__file__), 'static/upload/')
+admin.add_view(FileAdmin(path, '/static/upload/', name='Static Files'))
