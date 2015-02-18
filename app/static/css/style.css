@@ -5,13 +5,6 @@
     margin: 0 auto;
 }
 
-.navbar-default .navbar-nav>li>a.add-link {
-    color: red;
-}
-
-.container {
-    width: 740px;
-}
 
 /*
 ALL
@@ -99,12 +92,18 @@ HEADER
     font-size: 16px;
 }
 
+.navbar-default .navbar-nav>li>a:hover {
+    text-decoration: underline;
+    color: white;
+}
+
+/*
 .navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus {
     color: #fff;
     background-color: #FF9611;
     box-shadow: 0 0 0 1px rgba(0,0,0,.15) inset,0 0 6px rgba(0,0,0,.2) inset;
 }
-
+*/
 .menu-nav {
     margin-left: 10px;
 }

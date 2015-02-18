@@ -13,10 +13,11 @@ from config import POSTS_PER_PAGE
 @app.route('/')
 @app.route('/<int:page>')
 def index(page=1):
+    article = Article.query.order_by(Article.id.desc()).all()
     posts = Post.query.filter_by(yourself=False,
                                  anonymously=False) \
                                 .order_by(Post.id.desc()).paginate(page, POSTS_PER_PAGE, True)
-    return render_template('index.html', title='Последние сны', posts=posts)
+    return render_template('index.html', title='Последние сны', posts=posts, all=article)
 
 
 @app.route('/login', methods=['GET', 'POST'])

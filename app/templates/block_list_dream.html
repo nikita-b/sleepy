@@ -1,4 +1,4 @@
 <h3>Немного информации</h3>
-{% for article in all %}
+{% for dream in all_dream %}
     <a href="{{ url_for('article', title=article.url)}}">{{ article.title }}</a><br>
 {% endfor %}

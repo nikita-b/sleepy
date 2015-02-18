@@ -1,8 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
     <div class="row">
-        <div class="col-md-8">
-            {% for article in lst %}
+        <div class="col-md-6">
+            {% for article in lst[::2] %}
+                <a href="{{ url_for('article', title=article.url) }}"><h2>{{ article.title }}</h2></a>
+                <div class="text">{{ article.content | safe | truncate(255) }}</div>
+            {% endfor %}
+        </div>
+        <div class="col-md-6">
+            {% for article in lst[1::2] %}
                 <a href="{{ url_for('article', title=article.url) }}"><h2>{{ article.title }}</h2></a>
                 <div class="text">{{ article.content | safe | truncate(255) }}</div>
             {% endfor %}

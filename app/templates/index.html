@@ -1,41 +1,46 @@
 {% extends "base.html" %}
 {% block content %}
     <div class="row">
-        <div class="list-dream ">
-            {% for post in posts.items %}
-                {% include 'post.html' %}
-            {% endfor %}
-            <div class="text-center">
-                <nav>
-                  <ul class="pagination">
-                    {% if posts.has_prev %}
-                        <li>
-                            <a href="{{ url_for('index', page=posts.prev_num) }}" aria-label="Previous">
-                                <span aria-hidden="true"><i class="fa fa-lg fa-arrow-left"></i></span>
-                            </a>
-                        </li>
-                    {% endif %}
-                    {%- for page in posts.iter_pages() %}
-                        {% if page %}
-                            {% if page != posts.page %}
-                                <li><a href="{{ url_for('index', page=page) }}">{{ page }}</a></li>
-                            {% else %}
-                                <li class="active"><a href="#">{{ page }}</a></li>
-                            {% endif %}
-                        {% else %}
-                            <span class=ellipsis>…</span>
+        <div class="col-md-8">
+            <div class="list-dream ">
+                {% for post in posts.items %}
+                    {% include 'post.html' %}
+                {% endfor %}
+                <div class="text-center">
+                    <nav>
+                      <ul class="pagination">
+                        {% if posts.has_prev %}
+                            <li>
+                                <a href="{{ url_for('index', page=posts.prev_num) }}" aria-label="Previous">
+                                    <span aria-hidden="true"><i class="fa fa-lg fa-arrow-left"></i></span>
+                                </a>
+                            </li>
                         {% endif %}
-                    {%- endfor %}
-                    {% if posts.has_next %}
-                        <li>
-                            <a href="{{ url_for('index', page=posts.next_num) }}" aria-label="Next">
-                                <span aria-hidden="true"><i class="fa fa-lg fa-arrow-right"></i></span>
-                            </a>
-                        </li>
-                    {% endif %}
-                    </ul>
-                </nav>
+                        {%- for page in posts.iter_pages() %}
+                            {% if page %}
+                                {% if page != posts.page %}
+                                    <li><a href="{{ url_for('index', page=page) }}">{{ page }}</a></li>
+                                {% else %}
+                                    <li class="active"><a href="#">{{ page }}</a></li>
+                                {% endif %}
+                            {% else %}
+                                <span class=ellipsis>…</span>
+                            {% endif %}
+                        {%- endfor %}
+                        {% if posts.has_next %}
+                            <li>
+                                <a href="{{ url_for('index', page=posts.next_num) }}" aria-label="Next">
+                                    <span aria-hidden="true"><i class="fa fa-lg fa-arrow-right"></i></span>
+                                </a>
+                            </li>
+                        {% endif %}
+                        </ul>
+                    </nav>
+                </div>
             </div>
+        </div>
+        <div class="col-md-4 right-block">
+            {% include 'block_list_article.html' %}
         </div>
     </div>
 
