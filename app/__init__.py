@@ -1,10 +1,12 @@
 import os
 
+#from app import admin
+
 from flask import Flask
 # from config import basedir
 
-from flask.ext.login import LoginManager
 from flask.ext.admin import Admin
+from flask.ext.login import LoginManager
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.script import Manager
 from flask.ext.bcrypt import Bcrypt
@@ -12,8 +14,6 @@ from flask.ext.migrate import Migrate, MigrateCommand
 from flask_debugtoolbar import DebugToolbarExtension
 
 from .momentjs import momentjs
-
-
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -26,13 +26,11 @@ app.jinja_env.globals['momentjs'] = momentjs
 
 db = SQLAlchemy(app)
 
-# admin
-
-admin = Admin(app, name='Sheephappens')
-
-
 # bcrypt
 bcrypt = Bcrypt(app)
+
+# admin
+admin = Admin(app, name='Sheephappens')
 
 # migrate
 migrate = Migrate(app, db)
@@ -61,4 +59,4 @@ if not app.debug:
 
 
 
-from app import views, models
+from app import views, models, adminka

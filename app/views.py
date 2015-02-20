@@ -5,8 +5,8 @@ from flask.ext.login import login_user, logout_user, current_user, login_require
 
 from app import app, db, lm, bcrypt
 from .cfilter import nl2br
-from .forms import LoginForm, EditForm, PostForm, RegistrationForm, ArticleAddForm, CategoryAddForm
-from .models import User, Post, Article, Category
+from .forms import LoginForm, EditForm, PostForm, RegistrationForm
+from .models import User, Post, Article
 from config import POSTS_PER_PAGE
 
 

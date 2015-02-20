@@ -1,15 +1,11 @@
 from app import db
 from app import bcrypt
-from app import admin
 
 from .utils import translate_url
 
 from datetime import datetime
-import os.path as op
 
-from flask.ext.admin import Admin, BaseView, expose
-from flask.ext.admin.contrib.sqla import ModelView
-from flask.ext.admin.contrib.fileadmin import FileAdmin
+
 from flask.ext.login import current_user
 
 
@@ -176,9 +172,3 @@ class Category(db.Model):
 
 
 # MODELS ADMIN
-admin.add_view(ModelView(Post, db.session))
-admin.add_view(ModelView(User, db.session))
-admin.add_view(ModelView(Article, db.session))
-admin.add_view(ModelView(Category, db.session))
-path = op.join(op.dirname(__file__), 'static/upload/')
-admin.add_view(FileAdmin(path, '/static/upload/', name='Static Files'))

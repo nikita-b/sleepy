@@ -34,15 +34,3 @@ class PostForm(Form):
     datesleep = DateField('datesleep', format='%Y/%m/%d')
     anonymously = BooleanField('Anonymously', default=False)
     yourself = BooleanField('checked', default=False)
-
-
-# Admin
-
-class ArticleAddForm(Form):
-    title = StringField('Title')
-    content = TextAreaField('Text')
-    category = SelectField('Category', coerce=int, validators=[Optional()])
-
-
-class CategoryAddForm(Form):
-    name = StringField('Name')
