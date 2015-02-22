@@ -6,7 +6,11 @@
     <form clas action="" method="POST">
         {{ form.hidden_tag() }}
         <div class="form-group">
-            {{ form.description(class='form-control input-lg description-field has-error', rows=12, data_content=form.errors.description[0]) }}
+        {% for error in form.errors.description %}
+            {{ form.description(class='form-control input-lg description-field', rows=12, data_content=error) }}
+        {% else %}
+            {{ form.description(class='form-control input-lg description-field', rows=12) }}
+        {% endfor %}
         </div>
         <span class="help-block">Постарайтесь описать основной сюжет сна как можно подробней. Если хотите почитать
         рекомендации о том, как лучше запоминать сны, то смотрите в <a href="#">разделе статьи</a>.</span>
