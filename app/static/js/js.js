@@ -12,3 +12,11 @@ $(function () {
 })
 
 moment.locale('ru')
+
+
+
+$(".interpretation").click(function() {
+  $(".field-interpretation").toggle("slow");
+});
+
+$('.description-field').popover('show')

@@ -5,12 +5,23 @@
     <h2 class="h2-topic">Расскажите немного о вашем сне</h2>
     <form clas action="" method="POST">
         {{ form.hidden_tag() }}
-        {{ form.description(class='form-control input-lg', rows=12) }}
+        <div class="form-group">
+            {{ form.description(class='form-control input-lg description-field has-error', rows=12, data_content=form.errors.description[0]) }}
+        </div>
         <span class="help-block">Постарайтесь описать основной сюжет сна как можно подробней. Если хотите почитать
-        рекомендации о том, как лучше запоминать сны, то смотрите <a href="#">тут</a>.</span>
-        <label class="datasleep" for="datasleep">Когда он приснился?</label>
-        {{ form.datesleep(class='form-control datepicker', placeholder='Выберите дату') }}
-        
+        рекомендации о том, как лучше запоминать сны, то смотрите в <a href="#">разделе статьи</a>.</span>
+
+        <a class="btn btn-primary btn-xs" data-toggle="collapse" href="#interpretation" aria-expanded="false" aria-controls="interpretation">Добавить интерпретацию</a>
+        <div class="collapse" id="interpretation">
+            {{ form.interpretation(class='form-control input-lg', rows=12) }}
+            <span class="help-block">Постарайтесь описать ваши чувства во время сна. О чем этот сон? Ваше отношение к этому сну? Что вы почувствовали после пробуждения?</span>
+        </div>
+        <div>
+            <label class="datasleep" for="datasleep">Когда он приснился?</label>
+            {{ form.datesleep(class='form-control datepicker', placeholder='Выберите дату') }}
+            <span class="help-block">Старайтесь указывать.</span>
+
+        </div>
         {% if g.user.is_authenticated() %}
             <div class="row">
                 <div class="col-md-6">

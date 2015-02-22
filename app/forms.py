@@ -30,7 +30,8 @@ class EditForm(Form):
 
 
 class PostForm(Form):
-    description = TextAreaField('description')
+    description = TextAreaField('description', validators=[InputRequired()])
+    interpretation = TextAreaField('Interpretation')
     datesleep = DateField('datesleep', format='%Y/%m/%d')
     anonymously = BooleanField('Anonymously', default=False)
     yourself = BooleanField('checked', default=False)

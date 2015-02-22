@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from flask import render_template, flash, redirect, url_for, request, g
+from flask import render_template, flash, redirect, url_for, request, g, abort
 from flask.ext.login import login_user, logout_user, current_user, login_required
 
 from app import app, db, lm, bcrypt
@@ -17,7 +17,12 @@ def index(page=1):
     posts = Post.query.filter_by(yourself=False,
                                  anonymously=False) \
                                 .order_by(Post.id.desc()).paginate(page, POSTS_PER_PAGE, True)
-    return render_template('index.html', title='Последние сны', posts=posts, all=article)
+    return render_template('index.html',
+                           title='Онлайн дневник снов',
+                           posts=posts,
+                           all=article,
+                           meta_description='Удобная платформа для ведения своего \
+приватного или публичного дневника снов')
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -129,7 +134,8 @@ def add_dream():
                     author=author,
                     datesleep=form.datesleep.data,
                     anonymously=form.anonymously.data,
-                    yourself=form.yourself.data)
+                    yourself=form.yourself.data,
+                    interpretation=form.interpretation.data)
         db.session.add(post)
         db.session.commit()
         flash('Ваш сон опубликован, спасибо!')
@@ -207,6 +213,7 @@ def delete_dream(num):
     flash('Сон удален')
     return redirect(url_for('index'))
 
+
 @app.route('/dream/<int:num>/up')
 @login_required
 def voteup(num):
@@ -260,8 +267,7 @@ def dream(num):
     article = Article.query.order_by(Article.id.desc()).all()
     dream = Post.query.filter_by(id=int(num)).first()
     if dream is None:
-        flash('Сна с номером #%s не существует :(' % num)
-        return redirect(url_for('index'))
+        abort(404)
     return render_template('dream.html', dream=dream, all=article)
 
 
@@ -275,10 +281,6 @@ def list_article():
 def article(title):
     article = Article.query.filter_by(url=title).first()
     allarticle = Article.query.order_by(Article.id.desc()).all()
-    article.inc_views()
-    db.session.add(article)
-    db.session.commit()
     if article is None:
-        flash('Такой статьи не существует')
-        return redirect(url_for('index'))
+        abort(404)
     return render_template('article.html', article=article, all=allarticle)

@@ -1,13 +1,11 @@
 import os
 
-#from app import admin
-
 from flask import Flask
-# from config import basedir
 
 from flask.ext.admin import Admin
 from flask.ext.login import LoginManager
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.babel import Babel
 from flask.ext.script import Manager
 from flask.ext.bcrypt import Bcrypt
 from flask.ext.migrate import Migrate, MigrateCommand
@@ -37,6 +35,10 @@ migrate = Migrate(app, db)
 manager = Manager(app)
 manager.add_command('db', MigrateCommand)
 
+# babel
+babel = Babel(app)
+app.config['BABEL_DEFAULT_LOCALE'] = 'ru'
+
 # login
 lm = LoginManager()
 lm.init_app(app)
@@ -56,7 +58,5 @@ if not app.debug:
     file_handler.setLevel(logging.INFO)
     app.logger.addHandler(file_handler)
     app.logger.info('microblog statup')
-
-
 
 from app import views, models, adminka
