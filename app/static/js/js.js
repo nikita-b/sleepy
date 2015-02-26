@@ -20,3 +20,12 @@ $(".interpretation").click(function() {
 });
 
 $('.description-field').popover('show')
+
+
+$(function(){
+  $('.postrow').hover(function(){
+    $('.more-dream:only-child').addClass('more-dream-show');
+  }, function(){
+    $('.more-dream').removeClass('more-dream-show');
+  })
+});

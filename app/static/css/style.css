@@ -98,6 +98,17 @@ POST DREAM
     top: 5px;
     right: 5px;
 }
+
+.more-dream {
+    display: none;
+    position: absolute;
+    right: 5px;
+    bottom: 10px;
+}
+
+.more-dream-show {
+    display: block;
+}
 /*
 HEADER
 */
@@ -133,6 +144,10 @@ FOOTER
 .text-footer {
     float:right;
     color: white;
+}
+
+footer {
+    margin-bottom: 15px;
 }
 
 /*
