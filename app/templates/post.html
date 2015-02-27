@@ -8,7 +8,7 @@
             <a href="{{ url_for('dream', num=post.id) }}">прочесть дальше</a>
         {% endif %}
         </div><br>
-        <div class="more-dream"><div class="no-class"><a href="">Подробнее</a></div></div>
+        <div class="more-dream btn btn-primary btn-xs"><a href="{{ url_for('dream', num=post.id) }}">Полностью</a></div>
     </div>
     <div class="post-tools">
             <span class="bottom-post-left">

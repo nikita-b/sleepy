@@ -104,6 +104,11 @@ POST DREAM
     position: absolute;
     right: 5px;
     bottom: 10px;
+
+}
+
+.more-dream a{
+    color: #FFF;
 }
 
 .more-dream-show {

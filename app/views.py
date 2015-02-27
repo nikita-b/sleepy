@@ -188,11 +188,13 @@ def edit_dream(num):
         post.datesleep = form.datesleep.data
         post.anonymously = form.anonymously.data
         post.yourself = form.yourself.data
+        post.interpretation = form.interpretation.data
         db.session.add(post)
         db.session.commit()
         flash('Изменения внесены.')
         return redirect(url_for('edit_dream', num=post.id))
 
+    form.interpretation.data = post.interpretation
     form.description.data = post.description
     form.datesleep.data = post.datesleep
     form.anonymously.data = post.anonymously
