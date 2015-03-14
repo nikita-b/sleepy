@@ -288,6 +288,6 @@ def article(title):
     return render_template('article.html', article=article, all=allarticle)
 
 
-@app.route('googlec46bc793578366ba.html')
+@app.route('/googlec46bc793578366ba.html')
 def googleverify():
-    return "google-site-verification: googlec46bc793578366ba.html"
+    return 'google-site-verification: googlec46bc793578366ba.html'
