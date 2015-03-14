@@ -4,10 +4,12 @@
     <div class="row">
         <div class="col-md-8 description-dream">
             {{ dream.description| nl2br }}
-            <div class="well">
-                <h4>Интерпретация</h4>
-                {{ dream.interpretation| nl2br }}
-            </div>
+            {% if dream.interpretation %}
+                <div class="well">
+                    <h4>Интерпретация</h4>
+                    {{ dream.interpretation| nl2br }}
+                </div>
+            {% endif %}
         </div>
         <div class="col-md-4 right-block">
             {% include 'block_list_article.html' %}

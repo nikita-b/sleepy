@@ -16,4 +16,4 @@ DEBUG_TB_INTERCEPT_REDIRECTS = False  # Debug redicted off
 
 ADMINS = ['nikita@belecky.ru']
 
-POSTS_PER_PAGE = 3
+POSTS_PER_PAGE = 5
