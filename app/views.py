@@ -286,3 +286,8 @@ def article(title):
     if article is None:
         abort(404)
     return render_template('article.html', article=article, all=allarticle)
+
+
+@app.route('googlec46bc793578366ba.html')
+def googleverify():
+    return "google-site-verification: googlec46bc793578366ba.html"
