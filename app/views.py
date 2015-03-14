@@ -297,3 +297,7 @@ def robotstxt():
     resp = make_response(render_template('robots.txt'))
     resp.headers['content-type'] = 'text/plain'
     return resp
+
+@app.route('/yandex_6d808b722e491262.txt')
+def yandexverify():
+    return ""
