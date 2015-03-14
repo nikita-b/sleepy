@@ -1,0 +1,5 @@
+User-Agent: *
+Host: https://sheephappens.ru
+Disallow: /dream/add
+Disallow: /register
+Disallow: /login

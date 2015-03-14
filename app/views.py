@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from flask import render_template, flash, redirect, url_for, request, g, abort
+from flask import render_template, flash, redirect, url_for, request, g, abort, make_response
 from flask.ext.login import login_user, logout_user, current_user, login_required
 
 from app import app, db, lm, bcrypt
@@ -291,3 +291,9 @@ def article(title):
 @app.route('/googlec46bc793578366ba.html')
 def googleverify():
     return 'google-site-verification: googlec46bc793578366ba.html'
+
+@app.route('/robots.txt')
+def robotstxt():
+    resp = make_response(render_template('robots.txt'))
+    resp.headers['content-type'] = 'text/plain'
+    return resp
